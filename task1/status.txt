@@ -31,4 +31,8 @@ Untracked files:
 
         task1/
 
+Лев@DESKTOP-PJ5KGBD MINGW64 /d/temp/NewRepozitory (master)
+$ git stage
+Nothing specified, nothing added.
+Maybe you wanted to say 'git add .'?
 
