@@ -1,0 +1,152 @@
+.logo-box {
+			display: inline-block;
+			width: 70px;
+			height: 70px;
+			border: 3px solid black;
+			position: absolute;
+			top: 10px;
+			left: 10px;
+			background: #000001 url("J_image.jpg") no-repeat left top;
+		}
+		.header{
+			background-color: rgba(0,0,255,0.2);
+			font-size:4em;
+			color: red;
+			padding: 15px;
+			position: absolute;
+			width: 1550px;
+			height: 50px;
+			text-align: center;		
+			line-height: 15px;
+			z-index: 0;			
+		}
+		.footer{
+			background-color: rgba(0,0,255,0.2);
+			position: absolute;
+			width: 1550px;
+			top:805px;
+			font-size:1.5em;
+			color: red;
+			padding: 15px;			
+			height: 30px;
+			text-align: right;		
+			line-height: 15px;
+			z-index: 0;		
+		}
+		.userName{	
+			position: absolute;		
+			width: 250px;
+			height: 20px;		
+			text-align: right;
+			top: 10px;
+			left: 1300px;
+			z-index: 5;
+			color:lightgreen;
+		}
+		.loginHyperlink{
+			position:absolute;
+			width: 250px;
+			height: 40px;
+			text-align: right;
+			top:40px;
+			left:1300px;
+			z-index: 5;
+			color: yellow;
+		}
+		a{
+			visibility: hidden;
+		}
+		i:link {			
+			text-decoration: none;
+		}
+		i:hover  {
+			text-decoration: underline;
+		}
+
+		news{
+			font-size:1.5em;
+			color: rgba(255,100,0,1);
+		}
+		news:link{
+			text-decoration: none;
+		}
+		news:hover{
+			text-decoration: underline;
+		}
+
+		tag{
+			color: blue;
+		}
+		tag:link{
+			text-decoration: none;
+		}
+		tag:hover{
+			text-decoration: underline;
+		}
+		author{
+			color: red;
+		}
+		author:link{
+			text-decoration: none;
+		}
+		author:hover{
+			text-decoration: underline;
+		}
+		div.scrollMain{
+			background: transparent;
+			position: absolute;
+			top: 145px;
+			left: 10px;
+			width: 960px;
+			height: 630px; 
+			border: 2px;
+			border-width: 5px; 
+			border-color: red;
+			font-size: 1em;
+			overflow: scroll;
+			scroll-behavior: color : transparent;
+			color: orange;
+		}
+		.scrollAll{
+			background: transparent;
+			position: absolute;
+			top: 145px;
+			left: 1000px;
+			width: 570px;
+			height: 630px; 
+			border: 2px;
+			border-width: 5px; 
+			border-color: red;
+			font-size: 0.8em;
+			overflow: scroll;
+			scroll-behavior: color : transparent;;
+		}	
+		.createNewNewsButton{
+			display: inline-block;
+			width: 115px;
+			height: 20px;
+			border: 5px solid orange;
+			position: absolute;
+			top:775px;
+			left:20px;
+			color: brown;
+			background: yellow;
+		}
+		.tagLine{
+			display: inline-flex;
+			position: absolute;
+			top:100px;
+			left:10px;
+			border: 5px;
+			color: white;
+		}
+		.newsTapeText
+		{
+		position: absolute;
+		top:100px;
+		left:1010px;
+		color:red;
+		}	
+		body {
+			background: #000000 url("anotherFon.jpg") no-repeat left top;
+		}
