@@ -13,6 +13,7 @@
 			font-size:4em;
 			color: red;
 			padding: 15px;
+			left:0px;
 			position: absolute;
 			width: 1550px;
 			height: 50px;
@@ -25,9 +26,10 @@
 			position: absolute;
 			width: 1550px;
 			top:805px;
+			left:0px;
 			font-size:1.5em;
-			color: red;
-			padding: 15px;			
+			color: red;	
+			padding: 15px;	
 			height: 30px;
 			text-align: right;		
 			line-height: 15px;
@@ -64,7 +66,7 @@
 		}
 
 		news{
-			font-size:1.5em;
+			font-size:1.6em;
 			color: rgba(255,100,0,1);
 		}
 		news:link{
@@ -75,7 +77,7 @@
 		}
 
 		tag{
-			color: blue;
+			color: lightblue;
 		}
 		tag:link{
 			text-decoration: none;
@@ -102,10 +104,9 @@
 			border: 2px;
 			border-width: 5px; 
 			border-color: red;
-			font-size: 1em;
-			overflow: scroll;
-			scroll-behavior: color : transparent;
-			color: orange;
+			font-size: 1.2em;
+			overflow: auto ;
+			color: white;
 		}
 		.scrollAll{
 			background: transparent;
@@ -118,8 +119,8 @@
 			border-width: 5px; 
 			border-color: red;
 			font-size: 0.8em;
-			overflow: scroll;
-			scroll-behavior: color : transparent;;
+			overflow: auto;
+			color: white;
 		}	
 		.createNewNewsButton{
 			display: inline-block;
@@ -146,7 +147,14 @@
 		top:100px;
 		left:1010px;
 		color:red;
+		}
+		.newsBlock
+		{
+			display: inline-block;
+			border:2px solid white;
+			background: transparent;
+			width: 925px;
 		}	
 		body {
-			background: #000000 url("anotherFon.jpg") no-repeat left top;
+			background: url("DarkSpace.jpg") no-repeat left top;
 		}
