@@ -3,59 +3,198 @@
 	<head>
 		<title> Site </title>	
 		<link rel="stylesheet" type="text/css" href="styles.css">
+		<meta charset="UTF-8">
+		<script src="D:\\for UP\\javaScript\\js\\main.js"></script>
 	</head>
 	<body>
 		
+		<div class="logo-box">kartinka</div>
 		<div class="header"> JustNews 
 		</div>
-		<div class="logo-box">
-		</div>
-		<div class=".userName"> UserName </div>
-		<br>
-		<div class="scrollMain">
-			<div class="newsBlock"> 10:10 <news>Объёмы производства в Афганистане снизились на 20%</news><br> Источник: <author>Афганистан.ру</author>	Редактор: <author>Фыва</author>
-			Теги: <tag> Мир </tag> <tag> Экономика</tag><br></div><br><br>			
-			<div class="newsBlock">12:14 <news>США и Китай выйдут на новый виток торговой войны?</news><br> Источник: <author>тэкно:///блог</author>	Редактор: <author>Фыва</author> 
-			Теги:<tag> Аналитика </tag><tag> Экономика </tag><tag> Политика </tag><tag> Мир </tag><br></div><br><br>
-			<div class="newsBlock">13:58 <news>Нервозный Мюнхен</news><br>Источник: <author>Российская газета</author>	Редактор:<author> Фыва</author>
-			Теги: <tag> Мир </tag> <tag> Политика </tag><br></div><br><br>
-			<div class="newsBlock">10:25 <news> Иран закупит у Казахстана 950 тонн уранового концентрата</news><br> Источник: <author>DW</author>	Редактор: <author>Фыва</author>
-			Теги: <tag> Политика </tag> <tag> Экономика </tag><br></div><br><br>
-			<div class="newsBlock">20:31 <news> Лидер "Талибана" в Афганистане: сажайте больше деревьев </news><br> Источник: <author> BBC </author>	Редактор: <author>Фыва</author>
-			Теги: <tag> Мир </tag><br></div><br><br>
 
-			<div class="newsBlock">22:27 <news> Додон призвал послов США и Румынии не вмешиваться во внутренние дела Молдавии</news><br> Источник: <author> ТАСС </author>	Редактор: <author> Bred </author>
-			Теги: <tag> Мир </tag> <tag> Политика </tag> <tag> Общество </tag><br></div><br><br>
-			<div class="newsBlock">10:30 <news> Китай первым оплатил взносы в бюджет ООН в 2017 г. </news><br> Источник: <author> Жэньминь Жибао</author>	Редактор: <author>Bred</author>
-			Теги: <tag> Политика </tag> <tag> Мир </tag><br></div><br><br>
-			<div class="newsBlock">16:51 <news> Кому выгоден уход Флинна в отставку? </news><br> Источник: <author>Иносми</author>	Редактор: <author>Фыва</author>
-			Теги: <tag> Политика </tag> <tag> Аналитика </tag> <tag> Мир </tag><br></div><br><br>
-			<div class="newsBlock">14:04 <news> Варшава ожидает возвращения 400 тысяч поляков после Brexit </news><br> Источник: <author>РИА "Новости"</author> Редактор: <author>Bred</author>
-			Теги: <tag> Экономика </tag><tag> Политика </tag><tag> Мир </tag><br></div><br><br>
-			<div class="newsBlock">15:53 <news> 3 года после Майдана: что стало с экономикой Украины </news><br> Источник: <author>VestiFinance.ru</author>	Редактор: <author>Bred</author>
-			Теги: <tag> Экономика </tag><tag>Политика </tag><tag>Аналитика</tag><br></div><br><br>
-		</div>
-		<div class="scrollAll">
-		22:27 <news> Додон призвал послов США и Румынии не вмешиваться во внутренние дела Молдавии</news><br><br>
-		20:31 <news> Лидер "Талибана" в Афганистане: сажайте больше деревьев </news><br> <br>
-		16:51 <news> Кому выгоден уход Флинна в отставку? </news><br><br>
-		15:53 <news> 3 года после Майдана: что стало с экономикой Украины </news><br><br>
-		14:04 <news> Варшава ожидает возвращения 400 тысяч поляков после Brexit </news><br><br>
+		<div id = "news_list_id" class="scrollMain">
+				</div>
+				<div id = "news_common_list_id" class="scrollAll">
 
-		13:58 <news>Нервозный Мюнхен</news><br><br>
-		12:14 <news>США и Китай выйдут на новый виток торговой войны?</news><br><br>
-		10:30 <news> Китай первым оплатил взносы в бюджет ООН в 2017 г. </news><br> <br>
-		10:25 <news> Иран закупит у Казахстана 950 тонн уранового концентрата</news><br><br>
-		10:10 <news>Объёмы производства в Афганистане снизились на 20%</news><br><br>
+				</div>
+				<div class="footer"><i>JustNews</i>, Gordienko Lev, 2 study course,  5 groop,
+				<i>gorlev98@mail.ru</i>  27.02.2017</div>
+				<div id = "user" class="userName"></div>
+				<div class="loginHyperlink"><i>Логин / Регистрация</i></div>
+				<div class="createNewNewsButton"><i>Создать новость</i></div>
+				<div class="tagLine">
+				<tag onclick="workVar.newsList();">Всё</tag><a>___</a>
+				<tag onclick="workVar.tagNews({tag:this.innerText})">Политика</tag><a>___</a>
+				<tag onclick="workVar.tagNews({tag:this.innerText})">Экономика</tag><a>___</a>
+				<tag onclick="workVar.tagNews({tag:this.innerText})">Лучшее сегодня</tag><a>___</a>
+				<tag onclick="workVar.tagNews({tag:this.innerText})">Аналитика</tag><a>___</a>
+				<tag onclick="workVar.tagNews({tag:this.innerText})">Мир</tag><a>___</a>
+				<tag onclick="workVar.tagNews({tag:this.innerText})">Технологии</tag><a>___</a>
+				<tag onclick="workVar.tagNews({tag:this.innerText})">Общество</tag><a>___</a>
+				<author onclick="workVar.authors()">Авторы</author></div>
+				<div class="newsTapeText"> Общая лента новостей </div>
+
+		
 		</div>
-		<div class="footer"><i>JustNews</i>, Gordienko Lev, 2 study course,  5 groop,  <i>gorlev98@mail.ru</i>  27.02.2017</div>
-		<div class="userName">Гость</div>
-		<div class="loginHyperlink"><i>Логин / Регистрация</i></div>
-		<div class="createNewNewsButton"><i>Create new news</i></div>
-		<div class="tagLine"><tag>Всё</tag><a>___</a><tag>Политикаs</tag><a>___</a><tag>Экономика</tag><a>___</a><tag>Лучшее сегодня</tag><a>___</a><tag>Аналитика</tag><a>___</a>
-		<tag>Мир</tag><a>___</a><tag>Технологии</tag><a>___</a><tag>Общество</tag></div>
-		<div class="newsTapeText"> Общая лента новостей </div>
 	</body>
+	<script>
+        function workWithWindow() {
+            var workingFunc = lock();
+            function deleteNews(id) {/*эта функция уже подключена к кнопке, через консоль её запустить можно, но трудно*/
+                var splitter = id.split(/[<>]/);
+                console.log(splitter[2] + "|<br>");
+                workingFunc.removeFunc(splitter[2]);
+                getNewsList(workingFunc.getMassFunc());
+                getCommonNewsList();
+            }
+            function getNewsList(G_array) {
+                function addZero(i) {
+                    if (i < 10) {
+                        i = "0" + i;
+                    }
+                    return i;
+                }
+
+
+                var array = G_array;
+				if(!array)
+				{
+				    console.log("peredan pustoy parameter");
+				    array=workingFunc.getMassFunc();
+				}
+                var div1 = document.getElementById("news_list_id");
+                while (div1.firstElementChild) {
+                    div1.removeChild(div1.firstChild);
+                }
+                for (var i = 0; i < array.length; i++) {
+                    var obj1 = document.createElement('div');
+                    obj1.className = "newsBlock";
+                    var time = addZero(array[i].createdAt.getUTCDate()).toString() + " "
+                        + addZero(array[i].createdAt.getUTCMonth() + 1).toString()
+                        + "    " + array[i].createdAt.getHours() + ":" +
+                        addZero(array[i].createdAt.getMinutes());
+                    var newsName = array[i].title;
+                    var author = array[i].author;
+                    var tags = array[i].tag;
+                    var splitted_tags = (tags.toString()).split(/ /);
+                    obj1.innerHTML = time + ' ' + "<news>" + newsName + "</news>" + "<br>" +
+                        "Источник:" + "<a>___</a>" + "<author>" + author + "</author> " + "<a>___</a>" +
+                        "Теги:" + "<a>__</a>";
+                    for (var j = 0; j < splitted_tags.length; j++) {
+                        obj1.innerHTML = obj1.innerHTML + "<tag onclick=workVar.tagNews({tag:this.innerText})>" + splitted_tags[j] + "<a>__</a>" + "</tag>";
+                    }
+                    console.log("title=" + array[i].title + ", id=" + array[i].id + '<br>');
+                    obj1.innerHTML = obj1.innerHTML + "<br>" + '<delete onclick="workVar.deleteNews(this.innerHTML)">' +
+                        "Удалить новость" + "<a>" + array[i].id + "</a>" + "</delete>" + "<br>";
+                    div1.appendChild(obj1);
+                    var probel = document.createElement('div');
+                    probel.innerHTML = "<br>" + " ";
+                    div1.appendChild(probel);
+                }
+            }
+
+            function getCommonNewsList() {
+                function addZero(i) {
+                    if (i < 10) {
+                        i = "0" + i;
+                    }
+                    return i;
+                }
+
+                var articleMass = workingFunc.getMassFunc();
+                var div2 = document.getElementById("news_common_list_id");
+                while (div2.firstElementChild) {
+                    div2.removeChild(div2.firstChild);
+                }
+                var obj = document.createElement('div');
+                obj.className = "all_newsBlock";
+                for (var i = 0; i < articleMass.length; i++) {
+                    var time = articleMass[i].createdAt.getHours() + ":" + addZero(articleMass[i].createdAt.getMinutes());
+                    var newsName = articleMass[i].title;
+                    var newsObj = time + " " + "<news>" + newsName + "</news>" + "<br>";
+                    obj.innerHTML = obj.innerHTML + newsObj;
+                }
+                div2.appendChild(obj);
+            }
+
+            function addNewNews(title1, summary1, createdAt1, author1, content1, tag1) {
+                var newArt = {
+                    title: title1,
+                    summary: summary1,
+                    createdAt: createdAt1,
+                    author: author1,
+                    content: content1,
+                    tag: tag1
+                };
+                workingFunc.addFunc(newArt);
+                getNewsList(workingFunc.getMassFunc());
+                getCommonNewsList();
+            }
+
+
+            function rebildNews(id, Nchanges) {
+                workingFunc.editFunc(id, Nchanges);
+                getNewsList(workingFunc.getMassFunc());
+                getCommonNewsList();
+            }
+
+            function changeUserName(name) {
+
+                console.log("Prinyato imya=" + name);
+                var div1 = document.getElementById("user");
+                while (div1.firstElementChild) {
+                    div1.removeChild(div1.firstChild);
+                }
+                var obj1 = document.createElement('base');
+                obj1.innerHTML = name;
+                div1.appendChild(obj1);
+            }
+
+            function showAuthors() {
+
+                function showOnWindow(authMass) {
+                    var div1 = document.getElementById("news_list_id");
+                    while (div1.firstElementChild) {
+                        div1.removeChild(div1.firstChild);
+                    }
+                    for (var i = 0; i < authMass.length; i++) {
+                        var obj1 = document.createElement('div');
+                        obj1.className = "newsBlock";
+                        var author = authMass[i];
+                        obj1.innerHTML = "<author>" + author + "</author> ";
+                        obj1.innerHTML = obj1.innerHTML + "<br>";
+                        div1.appendChild(obj1);
+                        var probel = document.createElement('div');
+                        probel.innerHTML = "<br>" + " ";
+                        div1.appendChild(probel);
+                    }
+                }
+
+                var authorMass = workingFunc.getAuthors();
+                showOnWindow(authorMass);
+            }
+
+            function getNewsListWithTag(Ntag) {
+                console.log("getNewsListWithTag called");
+                var Nfilter = {tag: Ntag};
+                var tempLen = workingFunc.getMassFunc().length;
+                console.log(tempLen + " =tempLen");
+                var filteredArr = workingFunc.getFilteredMassFunc(0, tempLen, Ntag);
+                console.log(filteredArr[0].title+"element massiva");
+                getNewsList(filteredArr);
+                getCommonNewsList();
+            }
+
+			/*это также работает по кнопкам над главной лентой новостей*/
+            return {newsList:getNewsList,commonNewsList:getCommonNewsList,add:addNewNews,deleteNews:deleteNews,editNews:rebildNews,userChange:changeUserName,authors:showAuthors,tagNews:getNewsListWithTag};
+        }
+        var userName = "?";
+        var workVar = workWithWindow();
+        workVar.newsList();
+        workVar.commonNewsList();
+        workVar.userChange(userName);
+
+	</script>
 
 
 </html>
