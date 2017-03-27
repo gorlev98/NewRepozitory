@@ -1,0 +1,289 @@
+		.base{/*По непонятной мне причине первый класс не виден в html, поставил 'защиту'))*/
+			/*будет использоваться как класс оъектов, когда класс не нужен - вроде добавки строки в див*/
+		}
+		.logo-box {
+			/* Positioning */ 
+			position: absolute;				
+			top: 2px;
+			left: 10px;
+			z-index: 0;
+			 /* Display & Box Model */ 
+			display: inline-block;
+			width: 70px;
+			height: 70px;
+			border: 3px solid black;
+  			/* Color */ 
+			background: #000002 url("J_Image.jpg") no-repeat left top;
+		}
+		.header{
+			/* Positioning */ 
+			position: absolute;
+			left:0px;top:8px;
+			z-index:10;	
+		 	/* Display & Box Model */ 
+		 	width: 1550px;
+			height: 50px;
+			line-height: 15px;
+			padding: 15px;
+			font-size:4em;
+			/*Color*/
+			background-color: rgba(0,0,255,0.2);			
+			color: red;		
+			/*Else*/
+			text-align: center;						
+		}
+		.footer{
+			/* Positioning */ 
+			position: absolute;
+			top:805px;
+			left:0px;
+			z-index: 0;
+			/*Display & Box Model*/
+			height: 30px;
+			width: 1550px;
+			padding: 15px;
+			font-size:1.5em;
+			line-height: 15px;	
+			/*Color*/					
+			background-color: rgba(0,0,255,0.2);				
+			color: red;				
+			/*Else*/
+			text-align: right;					
+		}
+		.userName{	
+			/* Positioning */			
+			position: absolute;	
+			top: 10px;
+			left: 1300px;
+			z-index: 5;
+			/* Display & Box Model*/
+			width: 250px;
+			height: 20px;
+			font-size:25px;
+			/*Color*/
+			color:lightgreen;
+			/*Else*/
+			text-align: right;
+		}
+		.loginHyperlink{
+			/*Positioning*/
+			position:absolute;
+			top:40px;
+			left:1300px;
+			z-index: 5;
+			/*Display & Box Model*/
+			width: 250px;
+			height: 40px;
+			font-size:25px;
+			/*Color*/
+			color: yellow;
+			/*Else*/
+			text-align: right;
+		}
+		a{
+			visibility: hidden;
+		}
+		i:link {			
+			text-decoration: none;
+		}
+		i:hover  {
+			text-decoration: underline;
+		}
+		delete{
+			/*Display & Box Model*/
+			display: block;
+			font-size:1em;
+			/*Color*/
+			color: rgba(255,255,255,1);
+
+		}
+		delete:link{
+			text-decoration: none;
+		}
+		delete:hover {
+			text-decoration: underline;
+		}
+		change{
+			/*Display & Box Model*/
+			display: block;
+			font-size:1em;
+			/*Color*/
+			color: white;
+
+		}
+		change:link{
+			text-decoration: none;
+		}
+		change:hover {
+			text-decoration: underline;
+		}
+		news{
+			/*Display & Box Model*/
+			font-size:1.6em;
+			/*Color*/
+			color: rgba(255,100,0,1);
+		}
+		news:link{
+			text-decoration: none;
+		}
+		news:hover{
+			text-decoration: underline;
+		}
+		justText{
+			color: white;
+		}
+		tag{
+			color: lightblue;
+		}
+		tag:link{
+			text-decoration: none;
+		}
+		tag:hover{
+			text-decoration: underline;
+		}
+		tagCommon{
+			color: lightblue;
+		}
+		tagCommon:link{
+			text-decoration: none;
+		}
+		tagCommon:hover{
+			text-decoration: underline;
+		}
+		author{
+			 color: red;
+		 }
+		author:link{
+			text-decoration: none;
+		}
+		author:hover{
+			text-decoration: underline;
+		}
+		authorCommon{
+			color: red;
+		}
+		authorCommon:link{
+			text-decoration: none;
+		}
+		authorCommon:hover{
+			text-decoration: underline;
+		}
+		text{
+			color: limegreen;
+		}
+		div.scrollMain{
+			/*Positioning*/
+			position: absolute;
+			top: 145px;
+			left: 10px;
+			font-size: 1.2em;
+			/*Display & Box Model*/
+			width: 960px;
+			height: 630px; 
+			border: 2px;
+			border-width: 5px; 
+			/*Color*/
+			background: transparent;
+			border-color: red;
+			color: white;
+			/*Else*/
+			overflow: auto ;			
+		}
+		.scrollAll{
+			/*Positioning*/
+			display:block;
+			position: absolute;
+			top: 145px;
+			left: 1000px;
+			font-size: 0.8em;
+			/*Display & Box Model*/
+			width: 570px;
+			height: 630px; 
+			border: 2px;
+			border-width: 5px; 
+			/*Color*/
+			background: transparent;
+			border-color: red;
+			color: white;
+			/*Else*/
+			overflow: auto;			
+		}
+
+		.createNewNewsButton{
+			/*Positioning*/
+			position: absolute;
+			top:775px;
+			left:20px;
+			/*Display & Box Model*/
+			display: inline-block;
+			width: 125px;
+			height: 20px;
+			border: 5px solid orange;
+			/*Color*/			
+			color: brown;
+			background: yellow;
+		}
+		.tagLine{
+			/*Positioning*/
+			position: absolute;
+			top:100px;
+			left:10px;
+			/*Display & Box Model*/
+			display: inline-flex;			
+			border: 5px;
+			/*Color*/
+			color: white;
+		}
+		.newsTapeText
+		{
+		/*Positioning*/
+		position: absolute;
+		top:100px;
+		left:1010px;
+		/*Color*/
+		color:red;
+		}
+		.newsBlock
+		{
+			/*Display & Box Model*/
+			display: inline-block;
+			border:2px solid white;
+			background: transparent;
+			width: 925px;
+		}
+		.fullNewsBlock/*для развёрнутой новости*/
+		{
+			/*Positioning*/
+
+			width: 950px;
+
+			border: 2px;
+			border-width: 5px;
+			/*Color*/
+			background: transparent;
+			border-color: red;
+			color: white;
+		}
+		.textPosition{
+			display:ruby-text;
+			width: 570px;
+			height: 630px;
+		}
+		.all_newsBlock
+		{
+			/*Display & Box Model*/
+			display: inline-block;
+			background: transparent;
+			width: 560px;
+		}
+		.loginBox{}/*для логина при регистрации*/
+		.parolBox{}/*для пароля*/
+		.createNewsBox{}/*для новых новостей*/
+
+		.my_input{
+			width:900px;
+			height:200px;
+		}
+		body {
+			background: #000001 url("DarkSpace.jpg") no-repeat left top;
+		}
