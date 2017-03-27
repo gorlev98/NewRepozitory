@@ -1,200 +1,51 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title> Site </title>	
-		<link rel="stylesheet" type="text/css" href="styles.css">
-		<meta charset="UTF-8">
-		<script src="D:\\for UP\\javaScript\\js\\main.js"></script>
-	</head>
-	<body>
-		
-		<div class="logo-box">kartinka</div>
-		<div class="header"> JustNews 
-		</div>
-
-		<div id = "news_list_id" class="scrollMain">
-				</div>
-				<div id = "news_common_list_id" class="scrollAll">
-
-				</div>
-				<div class="footer"><i>JustNews</i>, Gordienko Lev, 2 study course,  5 groop,
-				<i>gorlev98@mail.ru</i>  27.02.2017</div>
-				<div id = "user" class="userName"></div>
-				<div class="loginHyperlink"><i>Логин / Регистрация</i></div>
-				<div class="createNewNewsButton"><i>Создать новость</i></div>
-				<div class="tagLine">
-				<tag onclick="workVar.newsList();">Всё</tag><a>___</a>
-				<tag onclick="workVar.tagNews({tag:this.innerText})">Политика</tag><a>___</a>
-				<tag onclick="workVar.tagNews({tag:this.innerText})">Экономика</tag><a>___</a>
-				<tag onclick="workVar.tagNews({tag:this.innerText})">Лучшее сегодня</tag><a>___</a>
-				<tag onclick="workVar.tagNews({tag:this.innerText})">Аналитика</tag><a>___</a>
-				<tag onclick="workVar.tagNews({tag:this.innerText})">Мир</tag><a>___</a>
-				<tag onclick="workVar.tagNews({tag:this.innerText})">Технологии</tag><a>___</a>
-				<tag onclick="workVar.tagNews({tag:this.innerText})">Общество</tag><a>___</a>
-				<author onclick="workVar.authors()">Авторы</author></div>
-				<div class="newsTapeText"> Общая лента новостей </div>
-
-		
-		</div>
-	</body>
-	<script>
-        function workWithWindow() {
-            var workingFunc = lock();
-            function deleteNews(id) {/*эта функция уже подключена к кнопке, через консоль её запустить можно, но трудно*/
-                var splitter = id.split(/[<>]/);
-                console.log(splitter[2] + "|<br>");
-                workingFunc.removeFunc(splitter[2]);
-                getNewsList(workingFunc.getMassFunc());
-                getCommonNewsList();
-            }
-            function getNewsList(G_array) {
-                function addZero(i) {
-                    if (i < 10) {
-                        i = "0" + i;
-                    }
-                    return i;
-                }
+<head>
+	<title> Site </title>
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	<meta charset="UTF-8">
+	<script src="D:\\for UP\\javaScript\\js\\main.js"></script>
+</head>
+<body>
 
 
-                var array = G_array;
-				if(!array)
-				{
-				    console.log("peredan pustoy parameter");
-				    array=workingFunc.getMassFunc();
-				}
-                var div1 = document.getElementById("news_list_id");
-                while (div1.firstElementChild) {
-                    div1.removeChild(div1.firstChild);
-                }
-                for (var i = 0; i < array.length; i++) {
-                    var obj1 = document.createElement('div');
-                    obj1.className = "newsBlock";
-                    var time = addZero(array[i].createdAt.getUTCDate()).toString() + " "
-                        + addZero(array[i].createdAt.getUTCMonth() + 1).toString()
-                        + "    " + array[i].createdAt.getHours() + ":" +
-                        addZero(array[i].createdAt.getMinutes());
-                    var newsName = array[i].title;
-                    var author = array[i].author;
-                    var tags = array[i].tag;
-                    var splitted_tags = (tags.toString()).split(/ /);
-                    obj1.innerHTML = time + ' ' + "<news>" + newsName + "</news>" + "<br>" +
-                        "Источник:" + "<a>___</a>" + "<author>" + author + "</author> " + "<a>___</a>" +
-                        "Теги:" + "<a>__</a>";
-                    for (var j = 0; j < splitted_tags.length; j++) {
-                        obj1.innerHTML = obj1.innerHTML + "<tag onclick=workVar.tagNews({tag:this.innerText})>" + splitted_tags[j] + "<a>__</a>" + "</tag>";
-                    }
-                    console.log("title=" + array[i].title + ", id=" + array[i].id + '<br>');
-                    obj1.innerHTML = obj1.innerHTML + "<br>" + '<delete onclick="workVar.deleteNews(this.innerHTML)">' +
-                        "Удалить новость" + "<a>" + array[i].id + "</a>" + "</delete>" + "<br>";
-                    div1.appendChild(obj1);
-                    var probel = document.createElement('div');
-                    probel.innerHTML = "<br>" + " ";
-                    div1.appendChild(probel);
-                }
-            }
 
-            function getCommonNewsList() {
-                function addZero(i) {
-                    if (i < 10) {
-                        i = "0" + i;
-                    }
-                    return i;
-                }
+<div class="header"> JustNews
+	<div class="logo-box"></div>
+	<div class="userName"></div>
+	<div class="loginHyperlink" onclick="workVar.loginClickFunc()"><i>Логин / Регистрация</i></div>
+</div>
 
-                var articleMass = workingFunc.getMassFunc();
-                var div2 = document.getElementById("news_common_list_id");
-                while (div2.firstElementChild) {
-                    div2.removeChild(div2.firstChild);
-                }
-                var obj = document.createElement('div');
-                obj.className = "all_newsBlock";
-                for (var i = 0; i < articleMass.length; i++) {
-                    var time = articleMass[i].createdAt.getHours() + ":" + addZero(articleMass[i].createdAt.getMinutes());
-                    var newsName = articleMass[i].title;
-                    var newsObj = time + " " + "<news>" + newsName + "</news>" + "<br>";
-                    obj.innerHTML = obj.innerHTML + newsObj;
-                }
-                div2.appendChild(obj);
-            }
+<div class="scrollMain">
+</div>
+<div class="scrollAll">
 
-            function addNewNews(title1, summary1, createdAt1, author1, content1, tag1) {
-                var newArt = {
-                    title: title1,
-                    summary: summary1,
-                    createdAt: createdAt1,
-                    author: author1,
-                    content: content1,
-                    tag: tag1
-                };
-                workingFunc.addFunc(newArt);
-                getNewsList(workingFunc.getMassFunc());
-                getCommonNewsList();
-            }
+</div>
+<div class="footer"><i>JustNews</i>, Gordienko Lev, 2 study course,  5 groop,
+	<i>gorlev98@mail.ru</i>  27.02.2017</div>
 
 
-            function rebildNews(id, Nchanges) {
-                workingFunc.editFunc(id, Nchanges);
-                getNewsList(workingFunc.getMassFunc());
-                getCommonNewsList();
-            }
-
-            function changeUserName(name) {
-
-                console.log("Prinyato imya=" + name);
-                var div1 = document.getElementById("user");
-                while (div1.firstElementChild) {
-                    div1.removeChild(div1.firstChild);
-                }
-                var obj1 = document.createElement('base');
-                obj1.innerHTML = name;
-                div1.appendChild(obj1);
-            }
-
-            function showAuthors() {
-
-                function showOnWindow(authMass) {
-                    var div1 = document.getElementById("news_list_id");
-                    while (div1.firstElementChild) {
-                        div1.removeChild(div1.firstChild);
-                    }
-                    for (var i = 0; i < authMass.length; i++) {
-                        var obj1 = document.createElement('div');
-                        obj1.className = "newsBlock";
-                        var author = authMass[i];
-                        obj1.innerHTML = "<author>" + author + "</author> ";
-                        obj1.innerHTML = obj1.innerHTML + "<br>";
-                        div1.appendChild(obj1);
-                        var probel = document.createElement('div');
-                        probel.innerHTML = "<br>" + " ";
-                        div1.appendChild(probel);
-                    }
-                }
-
-                var authorMass = workingFunc.getAuthors();
-                showOnWindow(authorMass);
-            }
-
-            function getNewsListWithTag(Ntag) {
-                console.log("getNewsListWithTag called");
-                var Nfilter = {tag: Ntag};
-                var tempLen = workingFunc.getMassFunc().length;
-                console.log(tempLen + " =tempLen");
-                var filteredArr = workingFunc.getFilteredMassFunc(0, tempLen, Ntag);
-                console.log(filteredArr[0].title+"element massiva");
-                getNewsList(filteredArr);
-                getCommonNewsList();
-            }
-
-			/*это также работает по кнопкам над главной лентой новостей*/
-            return {newsList:getNewsList,commonNewsList:getCommonNewsList,add:addNewNews,deleteNews:deleteNews,editNews:rebildNews,userChange:changeUserName,authors:showAuthors,tagNews:getNewsListWithTag};
-        }
-        var userName = "?";
-        var workVar = workWithWindow();
-        workVar.newsList();
-        workVar.commonNewsList();
-        workVar.userChange(userName);
-
-	</script>
+<div class="createNewNewsButton"><i>Создать новость</i></div>
+<div class="tagLine">
+	<tag onclick="workVar.newsList()">Всё</tag><a>___</a>
+	<tag onclick="workVar.tagNews({tag:this.innerText})">Политика</tag><a>___</a>
+	<tag onclick="workVar.tagNews({tag:this.innerText})">Экономика</tag><a>___</a>
+	<tag onclick="workVar.tagNews({tag:this.innerText})">Лучшее сегодня</tag><a>___</a>
+	<tag onclick="workVar.tagNews({tag:this.innerText})">Аналитика</tag><a>___</a>
+	<tag onclick="workVar.tagNews({tag:this.innerText})">Мир</tag><a>___</a>
+	<tag onclick="workVar.tagNews({tag:this.innerText})">Технологии</tag><a>___</a>
+	<tag onclick="workVar.tagNews({tag:this.innerText})">Общество</tag><a>___</a>
+	<authorCommon >Авторы</authorCommon></div>
+<div class="newsTapeText"> Общая лента новостей </div>
 
 
+</div>
+</body>
+<script>
+    var workVar = workWithWindow();
+    workVar.newsList();
+    workVar.commonNewsList();
+    workVar.userChange(userName);
+
+</script>
 </html>
