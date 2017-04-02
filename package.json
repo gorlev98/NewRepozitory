@@ -1,11 +1,25 @@
 {
   "name": "project",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Lev",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "mongodb": "^2.2.25"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gorlev98/NewRepozitory.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gorlev98/NewRepozitory/issues"
+  },
+  "homepage": "https://github.com/gorlev98/NewRepozitory#readme",
+  "description": ""
 }
