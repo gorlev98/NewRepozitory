@@ -539,7 +539,41 @@ function workWithWindow() {
             // SHOW YOU HOW TO DO IT ONCE, please follow
             text = JSON.parse(this.responseText);
             console.log(text);
-            //workVar.newsList(text);
+            var div1 = document.querySelector(".scrollMain");
+            while (div1.firstElementChild) {
+                div1.removeChild(div1.firstChild);
+            }
+            var id=-1;
+            for(var i=0;i<text.length;i++)
+            {
+                if(text[i].title==title)
+                {
+                    id=i;
+                }
+            }
+            var obj =document.createElement('div');
+            obj.className ="fullNewsBlock";
+            console.log("id="+id);
+
+            if(id!=-1)
+            {
+                var Ctime = new Date(text[id].createdAt);
+                var time = addZero(Ctime.getUTCDate()).toString() + " "
+                    + addZero(Ctime.getUTCMonth() + 1).toString()
+                    + "    " + Ctime.getHours() + ":" +
+                    addZero(Ctime.getMinutes());
+                var splitted_tags = (text[id].tag.toString()).split(/ /);
+                var newsName = text[id].title;
+                var author  = text[id].author;
+                obj.innerHTML = time + ' ' + "<news>" + newsName + "</news>" + "<br>" +"<justText>"+text[id].summary+"</justText>"+
+                    "<br><br>"+"<justText>"+text[id].content+"</justText>"+"<br><br>"+
+                    "Источник:" + "<a>___</a>" + '<author onclick="workVar.getAuthorsArticlesParam(this.innerText)">' + author +  "</author> " + "<a>___</a>" +
+                    "Теги:" + "<a>__</a>";
+                for (var j = 0; j < splitted_tags.length; j++) {
+                    obj.innerHTML = obj.innerHTML + '<tag  onclick="workVar.tagNews({tag:this.innerText})">' + splitted_tags[j] + "<a>__</a>" + "</tag>";
+                }
+                div1.appendChild(obj);
+            }
             cleanUp();
             //return text;
         }
@@ -549,15 +583,7 @@ function workWithWindow() {
         console.log("Try to GET /array");
         oReq.send();
 
-        var article = text;
-        var div1 = document.querySelector(".scrollMain");
-        while (div1.firstElementChild) {
-            div1.removeChild(div1.firstChild);
-        }
-        var obj =document.createElement('div');
-        obj.className ="fullNewsBlock";
-
-        var time = addZero(article.createdAt.getUTCDate()).toString() + " "
+      /*  var time = addZero(article.createdAt.getUTCDate()).toString() + " "
             + addZero(article.createdAt.getMonth() + 1).toString()+" "+article.createdAt.getYear()+
             + " " + article.createdAt.getHours() + ":" +
             addZero(article.createdAt.getMinutes());
@@ -572,7 +598,7 @@ function workWithWindow() {
         for (var j = 0; j < splitted_tags.length; j++) {
             obj.innerHTML = obj.innerHTML + '<tag  onclick="workVar.tagNews({tag:this.innerText})">' + splitted_tags[j] + "<a>__</a>" + "</tag>";
         }
-        div1.appendChild(obj);
+        div1.appendChild(obj);*/
     }
     function getCommonNewsList() {
 
