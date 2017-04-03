@@ -177,23 +177,9 @@ app.get('/array/:id',function (req,res){//новость по id
         }
     }
 })
-app.get('/user/:name,:parol',function (req,res){//проверка пользователя - если нашёл вернёт то же самое, что получил, иначе вернёт нулевого пользователя
-    var i = 0;
-    for(var i =0;i<userMass.length;i++)
-    {
-        if(userMass[i].name==req.params.name)
-        {
-            if(userMass[i].parol==req.params.parol)
-            {
-                i = 1;
-                res.send(userMass[i]);
-            }
-        }
-    }
-    if(i==0)
-    {
-        res.send({name:"",parol:""});
-    }
+app.get('/user',function (req,res){//массив пользователей
+    console.log("/user called");
+    res.send(userMass);
 })
 app.get('/authors',function (req,res){//массив авторов
     function sortAuthorMass(authMass) {
