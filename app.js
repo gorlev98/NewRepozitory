@@ -167,6 +167,19 @@ app.get('/array',function (req,res){//массив новостей
     //res.json(arr);
     res.send(arr);
 })
+/*app.get('/array/:tag',function (req,res){
+    var mass = new Array();
+   /* for(var i=0;i<arr.length;i++ )
+    {
+        //if(i%2==0)//arr[i].tag.indexOf(req.param.tag)>=0
+        //{
+            mass.push(arr[i].tag.indexOf(req.params.tag));
+        //}
+    }*/
+   // mass.push(req.params.tag);
+   // res.send(req.params.tag);
+    //res.send({"aaaaaa":"aaa"});
+//})
 app.get('/array/:id',function (req,res){//новость по id
 
     for(var i =0;i<arr.length;i++)

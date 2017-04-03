@@ -10,7 +10,7 @@ function lock(){
         return i;
     }
 
-    function funcSortArticleMass() {
+   /* function funcSortArticleMass() {
         function comparator(a, b) {
             var firstDay = a.createdAt.getTime();
             var secondDay = b.createdAt.getTime();
@@ -20,12 +20,13 @@ function lock(){
         console.log('Articles sorting ...');
         arr.sort(comparator);
         console.log('Sorted' + '<br>');
-    }
+    }*/
 
     function funcSortMass(mass) {
         function comparator(a, b) {
-            var firstDay = a.createdAt.getTime();
-            var secondDay = b.createdAt.getTime();
+            //console.log(a.createdAt);
+            var firstDay = new Date(a.createdAt).getTime();
+            var secondDay = new Date(b.createdAt).getTime();
             return secondDay - firstDay;
         }
 
@@ -266,9 +267,9 @@ function lock(){
         return res;
     }
 
-    function getFilteredArticles(skip, number, filter) {
+    function getFilteredArticles(mass, skip, number, filter) {
         console.log('getFilteredArticle function' + '<br>');
-        funcSortArticleMass();
+        funcSortMass(mass);
         var regex = /^[0-9]+$/
         if ((regex.test(skip)) && (regex.test(number))) {
             if (filter) {
@@ -278,19 +279,19 @@ function lock(){
                     var Tskip = skip;
                     var Tnumber = number;
                     var tempMass = [];
-                    for (var i = 0; i < arr.length; i++) {
-                        console.log("Сравниваю :"+arr[i].author+" & "+filter.author);
-                        if (arr[i].author == filter.author) {
+                    for (var i = 0; i < mass.length; i++) {
+                        console.log("Сравниваю :"+mass[i].author+" & "+filter.author);
+                        if (mass[i].author == filter.author) {
                             if (Tskip > 0) {
                                 Tskip = Tskip - 1;
                             }
                             else {
                                 if (Tnumber > 0) {
-                                    tempMass.push(arr[i]);
+                                    tempMass.push(mass[i]);
                                     Tnumber--;
                                 }
                                 else {
-                                    i = arr.length + 10;
+                                    i = mass.length + 10;
                                 }
                             }
                         }
@@ -304,9 +305,9 @@ function lock(){
                     var Tskip = skip;
                     var Tnumber = number;
                     var tempMass = [];
-                    for (var i = 0; i < arr.length; i++) {
-                        console.log(arr[i].tag + " " + filter.tag);
-                        if (arr[i].tag.indexOf(filter.tag) >= 0) {
+                    for (var i = 0; i < mass.length; i++) {
+                        console.log(mass[i].tag + " " + filter.tag);
+                        if (mass[i].tag.indexOf(filter.tag) >= 0) {
 
                             if (Tskip > 0) {
                                 Tskip = Tskip - 1;
@@ -314,12 +315,12 @@ function lock(){
                             else {
                                 console.log("2keks" + Tnumber);
                                 if (Tnumber > 0) {
-                                    tempMass.push(arr[i]);
-                                    console.log(arr[i].title + "element dobavlen");
+                                    tempMass.push(mass[i]);
+                                    console.log(mass[i].title + "element dobavlen");
                                     Tnumber--;
                                 }
                                 else {
-                                    i = arr.length + 1;
+                                    i = mass.length + 1;
                                 }
                             }
                         }
@@ -849,14 +850,45 @@ function workWithWindow() {
     }
 
     function getNewsListWithTag(Ntag) {
+        var oReq = new XMLHttpRequest();
+        console.log("oReq created");
+        function cleanUp() {
+            oReq.removeEventListener('load', handler);
+        }
+        function handler() {
+            //document.getElementById("main").textContent = this.responseText;//.substr(0,200)
+            function addZero(i) {
+                if (i < 10) {
+                    i = "0" + i;
+                }
+                return i;
+            }
+
+            var div1 = document.getElementById("main");
+            console.log("Hello, I'm here");
+            while (div1.firstElementChild) {
+                div1.removeChild(div1.firstChild);
+            }
+            // SHOW YOU HOW TO DO IT ONCE, please follow
+            var text = JSON.parse(this.responseText);
+            console.log(text);
+            //workVar.newsList(text);
+            //getCommonNewsListInsideFunc(text);
+            var tempLen =text.length;
+            var filteredArr = workingFunc.getFilteredMassFunc(text,0, tempLen, Ntag);
+            getNewsList(filteredArr);
+            cleanUp();
+        }
+        oReq.addEventListener('load', handler);
+        console.log("Event listener added");
+        oReq.open('GET', '/array');
+        console.log("Try to GET /array");
+        oReq.send();
+
         console.log("getNewsListWithTag called");
         var Nfilter = {tag: Ntag};
-        var tempLen = workingFunc.getMassFunc().length;
-        console.log(tempLen + " =tempLen");
-        var filteredArr = workingFunc.getFilteredMassFunc(0, tempLen, Ntag);
         //console.log(filteredArr[0].title+"element massiva");
-        getNewsList(filteredArr);
-        getCommonNewsList();
+
     }
     function visibilityFunc()
     {
@@ -969,7 +1001,7 @@ function workWithWindow() {
         loginButton.innerHTML = "<text> Get in </text>";
         loginButton.addEventListener('click',loginButtonClicked);
         getMainNewsScroll.appendChild(loginButton);
-        
+
         var registerButton=document.createElement('button');
         registerButton.innerHTML = "<text> Registration </text>";
         getMainNewsScroll.appendChild(registerButton);
