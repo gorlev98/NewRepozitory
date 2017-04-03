@@ -403,7 +403,8 @@ function workWithWindow() {
         var array = G_array;
         var visible = workVar.visibility();
         console.log("getNewsList called, parameter ="+G_array);
-        if (!array) {
+        if (array==undefined) {
+            console.log("array==undefined");
             var oReq = new XMLHttpRequest();
             console.log("oReq created");
             function cleanUp() {
@@ -425,10 +426,10 @@ function workWithWindow() {
                 }
                 // SHOW YOU HOW TO DO IT ONCE, please follow
                 var text = JSON.parse(this.responseText);
+                cleanUp();
                 console.log(text);
                 workVar.newsList(text);
                 getCommonNewsListInsideFunc(text);
-                cleanUp();
             }
             oReq.addEventListener('load', handler);
             console.log("Event listener added");
@@ -438,6 +439,7 @@ function workWithWindow() {
         }
         else
         {
+            console.log("Chto-to est'");
             var div1 = document.querySelector(".scrollMain");
             while (div1.firstElementChild) {
                 div1.removeChild(div1.firstChild);
@@ -506,6 +508,7 @@ function workWithWindow() {
             }
             var authorComm = document.querySelector('authorCommon');
             authorComm.addEventListener('click', workVar.authors);
+            console.log("getNewsFunc finished");
         }
     }
     function showFullNews(title)
@@ -891,7 +894,7 @@ function workWithWindow() {
             }
 
             var div1 = document.getElementById("main");
-            console.log("Hello, I'm here");
+            console.log("getNewsListWithTag in progress");
             while (div1.firstElementChild) {
                 div1.removeChild(div1.firstChild);
             }
@@ -934,12 +937,47 @@ function workWithWindow() {
     }
     function getAuthorsArticles()
     {
+        var oReq = new XMLHttpRequest();
+        console.log("oReq created");
+        function cleanUp() {
+            oReq.removeEventListener('load', handler);
+        }
+        function handler() {
+            //document.getElementById("main").textContent = this.responseText;//.substr(0,200)
+            function addZero(i) {
+                if (i < 10) {
+                    i = "0" + i;
+                }
+                return i;
+            }
+
+            var div1 = document.getElementById("main");
+            console.log("Hello, I'm here");
+            while (div1.firstElementChild) {
+                div1.removeChild(div1.firstChild);
+            }
+            // SHOW YOU HOW TO DO IT ONCE, please follow
+            var text = JSON.parse(this.responseText);
+            console.log("text:");
+            console.log(text);
+            //workVar.newsList(text);
+            //getCommonNewsListInsideFunc(text);
+            var tempLen =text.length;
+            var filteredArr = workingFunc.getFilteredMassFunc(text,0, tempLen,authorVar);
+            console.log("filtered:");
+            console.log(filteredArr);
+
+            getNewsList(filteredArr);
+            console.log("getAuthorsArticles: work in getNewsList finished");
+            cleanUp();
+        }
+        var authorVar = {author:this.innerText};
         console.log("getAuthorsArticles called");
-        var tempLen = workingFunc.getMassFunc().length;
-        console.log(this.innerText);
-        var filteredArr = workingFunc.getFilteredMassFunc(0, tempLen, {author:this.innerText});
-        getNewsList(filteredArr);
-        getCommonNewsList();
+        oReq.addEventListener('load', handler);
+        console.log("Event listener added");
+        oReq.open('GET', '/array');
+        console.log("Try to GET /array");
+        oReq.send();
     }
     function getAuthorsArticlesParam(author)
     {
