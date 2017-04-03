@@ -1,4 +1,4 @@
-var express = require('express');
+﻿var express = require('express');
 var bodyParser = require('body-parser');
 
 var app = express();
@@ -9,11 +9,18 @@ app.use(bodyParser.urlencoded({ extended: true}));//парсить формы
 
 app.use(express.static('public'));
 
+app.set('port', (process.env.PORT || 5000));
+
+app.use(express.static(__dirname + '/public'));
+
+// we need it to parse content-type application/json
+app.use(bodyParser.json());
+
+// we need it to parse content-type application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
+
 
 app.get('/', function (req, res) {
-
-
-res.send('Hello World!');
 
 
 });
@@ -150,10 +157,17 @@ var arr = [
     }
 
 ];
-app.get('/array',function (req,res){
+var userMass =[
+    {
+        name:"Lev",
+        parol:"lkoelk",
+    }
+]
+app.get('/array',function (req,res){//массив новостей
+    //res.json(arr);
     res.send(arr);
 })
-app.get('/array/:id',function (req,res){
+app.get('/array/:id',function (req,res){//новость по id
 
     for(var i =0;i<arr.length;i++)
     {
@@ -163,9 +177,63 @@ app.get('/array/:id',function (req,res){
         }
     }
 })
+app.get('/user/:name,:parol',function (req,res){//проверка пользователя - если нашёл вернёт то же самое, что получил, иначе вернёт нулевого пользователя
+    var i = 0;
+    for(var i =0;i<userMass.length;i++)
+    {
+        if(userMass[i].name==req.params.name)
+        {
+            if(userMass[i].parol==req.params.parol)
+            {
+                i = 1;
+                res.send(userMass[i]);
+            }
+        }
+    }
+    if(i==0)
+    {
+        res.send({name:"",parol:""});
+    }
+})
+app.get('/authors',function (req,res){//массив авторов
+    function sortAuthorMass(authMass) {
+        function comparator(a, b) {
+
+            return b < a;
+        }
+        authMass.sort(comparator);
+    }
+    var ext_authorsMass = new Array();
+    for(var i =0;i<arr.length;i++)
+    {
+        ext_authorsMass.push(arr[i].author);
+    }
+    sortAuthorMass(ext_authorsMass);
+    var authorsMass=new Array();
+    authorsMass.push(ext_authorsMass[0]);
+    for(var i =1;i<ext_authorsMass.length;i++)
+    {
+        if(ext_authorsMass[i-1]!=ext_authorsMass[i])
+        {
+            authorsMass.push(ext_authorsMass[i]);
+        }
+    }
+    res.send(authorsMass);
+})
+app.get('/authorArticles/:author',function (req,res){//авторские творения
+    var artMass = new Array();
+    for(var i =0;i<arr.length;i++)
+    {
+        if(arr[i].author==req.params.author)
+        {
+            artMass.push(arr[i]);
+        }
+    }
+    res.send(artMass);
+})
 app.listen(3000, function () {
 
-app.post('/array', function (req,res){
+app.post('/array', function (req,res){//добавить новость
     var article = {
         id: Date.now(),
         title: req.body.title,
@@ -180,7 +248,7 @@ app.post('/array', function (req,res){
     res.send(article);
 })
 
-app.put('/array/:id', function(req,res){
+app.put('/array/:id', function(req,res){//изменить новость по id
     var article = arr.find(function (article){
         return article.id == Number(req.params.id)
     });
@@ -190,12 +258,22 @@ app.put('/array/:id', function(req,res){
     res.sendStatus(200);
 })
 
-app.delete('/array/:id',function (req,res){
+app.delete('/array/:id',function (req,res){//удалить новость по id
     arr = arr.filter(function (article){
         return article.id != Number(req.params.id);
     })//вернёт массив элем., без удаляемого id-шника
     res.sendStatus(200);
 })
+app.post('/user', function(req,res){//добавить пользователя
+    var user = {
+        name: req.body.name,
+        parol: req.body.parol
+    };
+    userMass.push(user);
+    console.log(req.body);
+    res.send(user);
+})
+
 console.log('Example app listening on port 3000!')
 
 
