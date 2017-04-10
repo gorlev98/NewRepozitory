@@ -1,607 +1,60 @@
 "use strict";
 
-var userName = {name:"?",type:"guest"};
-function lock(){
-    if(localStorage.length==0) {
-    	console.log("createNewStorage");
-        var arr = [
-            {
-                id: '1',
-                title: 'Объёмы производства в Афганистане снизились на 20%',
-                summary: 'Представители Промышленной ассоциации Афганистана заявили, что в 2016 году производство упадёт на 20%.',
-                createdAt: new Date('27 February 2017 10:10'),
-                author: 'Афганистан.ру',
-                content: 'Как рассказал на пресс-конференции в Кабуле ' +
-                'президент Ассоциации Сахи Ахмад Пайман, производства сталкиваются' +
-                ' с такими проблемами, как малая поддержка со стороны правительства,' +
-                ' отсутствие безопасности в многих районах страны и недостаток кредитования' +
-                ' на адекватных условиях. Это также приводит к снижению инвестиций в экономику' +
-                ' страны, из-за чего возникает порочный круг, передает афганский телеканал "Толо".',
-                tag: 'Мир' + ' ' + 'Экономика'
-            },
-            {
-                id: '2',
-                title: 'США и Китай выйдут на новый виток торговой войны?',
-                summary: 'Теперь, когда в должность вступил президент Дональд Трамп, экономическое противостояние' +
-                ' США и Китая может перерасти в настоящую торговую войну. ',
-                createdAt: new Date('13 January 2017 12:14'),
-                author: 'тэкно:///блог',
-                content: 'По мнению эксперта момент для эскалации экономического противостояния двух' +
-                ' держав выбран неподходящий. Ведь именно сейчас США и Китай достигли практически максимальной' +
-                ' взаимозависимости, а ценность их торговых и инвестиционных отношений как никогда высока. Однако' +
-                ' Трамп, севший в президентское кресло "на волне американского национализма и протекционизма", по-видимому, рассуждает иначе.',
-                tag: 'Мир' + ' ' + 'Экономика' + ' ' + 'Аналитика' + ' ' + 'Политика'
-            },
-            {
-                id: '3',
-                title: 'Нервозный Мюнхен',
-                summary: 'вице-председатель Европейской комиссии Франс Тиммерманс: "В Евросоюзе есть два типа стран-членов' +
-                ' – маленькие страны-члены и те, кто еще не понял, что они маленькие страны-члены".',
-                createdAt: new Date('23 February 2017 13:58'),
-                author: 'Российская газета',
-                content: 'Европейским государствам пора понять реальности современного мира и сплотиться,' +
-                ' чтобы увеличить свой международный вес. Однако то, что обнаружила трехдневная дискуссия,' +
-                ' свидетельствует о глубоком разброде и шатаниях в атлантическом сообществе.',
-                tag: 'Мир' + ' ' + 'Политика'
-            },
-            {
-                id: '4',
-                title: 'Иран закупит у Казахстана 950 тонн уранового концентрата',
-                summary: 'Астана в течение трех лет поставит в Иран 950 тонн уранового концентрата. Об этом заявил' +
-                ' глава Организации по атомной энергии Ирана Али Акбар Салехи, которого в субботу, 25 февраля, цитирует' +
-                ' информационное агентство ISNA.',
-                createdAt: new Date('26 February 2017 10:25'),
-                author: 'DW',
-                content: '"Ожидается, что около 650 тонн будут доставлены в Тегеран двумя партиями в течение двух лет.' +
-                ' Оставшиеся 300 тонн поступят в течение третьего года и после конвертации в газ UF6 (гексафторид урана. - Ред.)' +
-                ' в обмен на финансовую компенсацию будут отправлены обратно в Казахстан", - отметил Али Акбар Салехи.',
-                tag: 'Экономика' + ' ' + 'Политика'
-            },
-            {
-                id: '5',
-                title: 'Лидер "Талибана" в Афганистане: сажайте больше деревьев',
-                summary: 'Лидер исламистского движения "Талибан" в Афганистане Хибатулла Ахундзада призвал жителей страны сажать больше деревьев.',
-                createdAt: new Date('26 February 2017 20:31'),
-                author: 'BBC',
-                content: 'В своем заявлении он призывает всех бойцов и гражданское население посадить' +
-                ' по меньшей мере одно фруктовое или нефруктовое дерево ради украшения Земли и "во благо всех' +
-                ' созданий всеблагого Аллаха".Афганистан сталкивается с серьезной проблемой сведения и оскудения' +
-                ' существующих лесов. В стране уничтожают деревья на топливо и в результате незаконных рубок.',
-                tag: 'Мир'
-            },
-            {
-                id: '6',
-                title: 'Додон призвал послов США и Румынии не вмешиваться во внутренние дела Молдавии',
-                summary: 'Президент Молдавии Игорь Додон потребовал от послов США и Румынии Джеймса Петтита и' +
-                ' Даниела Ионицэ не вмешиваться в его деятельность как главы государства.',
-                createdAt: new Date('26 February 2017 22:27'),
-                author: 'ТАСС',
-                content: 'Об этом говорится в ответном послании на письмо дипломатов, в котором' +
-                ' они выразили озабоченность тем, что Додон как верховный главнокомандующий запретил' +
-                ' молдавским военным участвовать в учениях НАТО, которые начались 20 февраля и завершатся' +
-                ' 1 марта в учебном центре Смырдан в Румынии. Оба письма опубликовало молдавское интернет-издание Independent.',
-                tag: 'Мир' + ' ' + 'Общество' + ' ' + 'Политика'
-            },
-            {
-                id: '7',
-                title: 'Китай первым оплатил взносы в бюджет ООН в 2017 г.',
-                summary: 'Китай уже заплатил ежегодный взносы в бюджет ООН 2017 года, став не только первым' +
-                ' из пяти постоянных членов ООН, заплативших взнос, но и первой страной среди "больших вкладчиков",' +
-                ' выполнивших свои платежные обязательства.',
-                createdAt: new Date('27 February 2017 10:30'),
-                author: 'Жэньминь Жибао',
-                content: 'С 2016 года, согласно решению Генеральной Ассамблеи ООН,' +
-                ' распределившей между государствами расходы всемирной организации, доля взносов Китая' +
-                ' в регулярный бюджет ООН с 5,148% увеличилась до 7,921%. В соответствии с этим планом, в 2016' +
-                ' году Китай заплатил 196 млн долларов США в качестве взноса в регулярный бюджет ООН; по плану' +
-                ' финансирования в 2017 году, Китай должен был выплатить 199 млн долларов США.',
-                tag: 'Мир' + ' ' + 'Политика'
-            },
-            {
-                id: '8',
-                title: 'Кому выгоден уход Флинна в отставку?',
-                summary: 'Генерал-лейтенант в отставке Майкл Флинн из-за оказанного на него давления' +
-                ' ушел с поста советника по национальной безопасности, не проработав на нем и месяца.',
-                createdAt: new Date('16 February 2017 16:51'),
-                author: 'Иносми',
-                content: 'Отставка Флинна отразится на всем Вашингтоне и на мировом сообществе,' +
-                ' а ее последствия для внешней политики администрации Трампа начнут сказываться лишь' +
-                ' через какое-то время. Но уже сейчас можно определить, кто от этого выиграл, а кто проиграл.',
-                tag: 'Мир' + ' ' + 'Аналитика' + ' ' + 'Политика'
-            },
-            {
-                id: '9',
-                title: 'Варшава ожидает возвращения 400 тысяч поляков после Brexit',
-                summary: 'До 400 тысяч поляков, живущих в Великобритании, могут лишиться' +
-                ' права постоянного проживания в стране после Brexit',
-                createdAt: new Date('27 February 2017 14:04'),
-                author: 'РИА "Новости"',
-                content: '"Трудно точно определить, сколько поляков после Brexit не подойдут для' +
-                ' постоянного места жительства, следует считать, что эта проблема может коснуться' +
-                ' 120-400 тысяч человек. Поэтому можно рассчитывать, что часть поляков (как ожидается,' +
-                ' 100-200 тысяч), живущих в Великобритании, примут решение вернуться в страну", —' +
-                ' говорится в сообщении ведомства, которое цитирует интернет-портал Onet.',
-                tag: 'Мир' + ' ' + 'Экономика' + ' ' + 'Политика'
-            },
-            {
-                id: '10',
-                title: '3 года после Майдана: что стало с экономикой Украины',
-                summary: 'На прошлой неделе Украина отмечала очередную годовщину Майдана,' +
-                ' хотя с точки зрения экономики поводов для радости нет.',
-                createdAt: new Date('27 February 2017 15:53'),
-                author: 'VestiFinance.ru',
-                content: 'Временное правительство было сформировано 27 февраля 2014 г., поэтому именно' +
-                ' эту дату стоит взять за точку отсчета. Новые власти, несмотря на все обещания, заверения' +
-                ' и амбиции, не только не смогли улучшить жизнь своих граждан, но и вообще как-то стабилизировать экономику.',
-                tag: 'Экономика' + ' ' + 'Аналитика' + ' ' + 'Политика'
-            }
-
-        ];
-        var a = JSON.stringify(arr);
-        localStorage.setItem("A", a);
-    }
-
-    var tempStr = localStorage.getItem("A");
-    var temp = JSON.parse(tempStr, function (key, value) {
-        if (key == "createdAt") {
-            return new Date(value);
-        }
-        return value;
-    });
-
-    var arr = temp;
-    var userMass =[
-        {
-            name:"Lev",
-            parol:"lkoelk",
-        }
-    ]
-    var global_id = 11;
-    var numberOfNews = 10;
+var userName = {name: "?", type: "guest"};
+function lock() {
     var tagMass = ['Экономика', 'Аналитика', 'Политика', 'Мир', 'Общество'];
 
-    function reloadLocalStorage()
-    {
-        localStorage.clear();
-        console.log("createNewStorage");
-        var array = [
-            {
-                id: '1',
-                title: 'Объёмы производства в Афганистане снизились на 20%',
-                summary: 'Представители Промышленной ассоциации Афганистана заявили, что в 2016 году производство упадёт на 20%.',
-                createdAt: new Date('27 February 2017 10:10'),
-                author: 'Афганистан.ру',
-                content: 'Как рассказал на пресс-конференции в Кабуле ' +
-                'президент Ассоциации Сахи Ахмад Пайман, производства сталкиваются' +
-                ' с такими проблемами, как малая поддержка со стороны правительства,' +
-                ' отсутствие безопасности в многих районах страны и недостаток кредитования' +
-                ' на адекватных условиях. Это также приводит к снижению инвестиций в экономику' +
-                ' страны, из-за чего возникает порочный круг, передает афганский телеканал "Толо".',
-                tag: 'Мир' + ' ' + 'Экономика'
-            },
-            {
-                id: '2',
-                title: 'США и Китай выйдут на новый виток торговой войны?',
-                summary: 'Теперь, когда в должность вступил президент Дональд Трамп, экономическое противостояние' +
-                ' США и Китая может перерасти в настоящую торговую войну. ',
-                createdAt: new Date('13 January 2017 12:14'),
-                author: 'тэкно:///блог',
-                content: 'По мнению эксперта момент для эскалации экономического противостояния двух' +
-                ' держав выбран неподходящий. Ведь именно сейчас США и Китай достигли практически максимальной' +
-                ' взаимозависимости, а ценность их торговых и инвестиционных отношений как никогда высока. Однако' +
-                ' Трамп, севший в президентское кресло "на волне американского национализма и протекционизма", по-видимому, рассуждает иначе.',
-                tag: 'Мир' + ' ' + 'Экономика' + ' ' + 'Аналитика' + ' ' + 'Политика'
-            },
-            {
-                id: '3',
-                title: 'Нервозный Мюнхен',
-                summary: 'вице-председатель Европейской комиссии Франс Тиммерманс: "В Евросоюзе есть два типа стран-членов' +
-                ' – маленькие страны-члены и те, кто еще не понял, что они маленькие страны-члены".',
-                createdAt: new Date('23 February 2017 13:58'),
-                author: 'Российская газета',
-                content: 'Европейским государствам пора понять реальности современного мира и сплотиться,' +
-                ' чтобы увеличить свой международный вес. Однако то, что обнаружила трехдневная дискуссия,' +
-                ' свидетельствует о глубоком разброде и шатаниях в атлантическом сообществе.',
-                tag: 'Мир' + ' ' + 'Политика'
-            },
-            {
-                id: '4',
-                title: 'Иран закупит у Казахстана 950 тонн уранового концентрата',
-                summary: 'Астана в течение трех лет поставит в Иран 950 тонн уранового концентрата. Об этом заявил' +
-                ' глава Организации по атомной энергии Ирана Али Акбар Салехи, которого в субботу, 25 февраля, цитирует' +
-                ' информационное агентство ISNA.',
-                createdAt: new Date('26 February 2017 10:25'),
-                author: 'DW',
-                content: '"Ожидается, что около 650 тонн будут доставлены в Тегеран двумя партиями в течение двух лет.' +
-                ' Оставшиеся 300 тонн поступят в течение третьего года и после конвертации в газ UF6 (гексафторид урана. - Ред.)' +
-                ' в обмен на финансовую компенсацию будут отправлены обратно в Казахстан", - отметил Али Акбар Салехи.',
-                tag: 'Экономика' + ' ' + 'Политика'
-            },
-            {
-                id: '5',
-                title: 'Лидер "Талибана" в Афганистане: сажайте больше деревьев',
-                summary: 'Лидер исламистского движения "Талибан" в Афганистане Хибатулла Ахундзада призвал жителей страны сажать больше деревьев.',
-                createdAt: new Date('26 February 2017 20:31'),
-                author: 'BBC',
-                content: 'В своем заявлении он призывает всех бойцов и гражданское население посадить' +
-                ' по меньшей мере одно фруктовое или нефруктовое дерево ради украшения Земли и "во благо всех' +
-                ' созданий всеблагого Аллаха".Афганистан сталкивается с серьезной проблемой сведения и оскудения' +
-                ' существующих лесов. В стране уничтожают деревья на топливо и в результате незаконных рубок.',
-                tag: 'Мир'
-            },
-            {
-                id: '6',
-                title: 'Додон призвал послов США и Румынии не вмешиваться во внутренние дела Молдавии',
-                summary: 'Президент Молдавии Игорь Додон потребовал от послов США и Румынии Джеймса Петтита и' +
-                ' Даниела Ионицэ не вмешиваться в его деятельность как главы государства.',
-                createdAt: new Date('26 February 2017 22:27'),
-                author: 'ТАСС',
-                content: 'Об этом говорится в ответном послании на письмо дипломатов, в котором' +
-                ' они выразили озабоченность тем, что Додон как верховный главнокомандующий запретил' +
-                ' молдавским военным участвовать в учениях НАТО, которые начались 20 февраля и завершатся' +
-                ' 1 марта в учебном центре Смырдан в Румынии. Оба письма опубликовало молдавское интернет-издание Independent.',
-                tag: 'Мир' + ' ' + 'Общество' + ' ' + 'Политика'
-            },
-            {
-                id: '7',
-                title: 'Китай первым оплатил взносы в бюджет ООН в 2017 г.',
-                summary: 'Китай уже заплатил ежегодный взносы в бюджет ООН 2017 года, став не только первым' +
-                ' из пяти постоянных членов ООН, заплативших взнос, но и первой страной среди "больших вкладчиков",' +
-                ' выполнивших свои платежные обязательства.',
-                createdAt: new Date('27 February 2017 10:30'),
-                author: 'Жэньминь Жибао',
-                content: 'С 2016 года, согласно решению Генеральной Ассамблеи ООН,' +
-                ' распределившей между государствами расходы всемирной организации, доля взносов Китая' +
-                ' в регулярный бюджет ООН с 5,148% увеличилась до 7,921%. В соответствии с этим планом, в 2016' +
-                ' году Китай заплатил 196 млн долларов США в качестве взноса в регулярный бюджет ООН; по плану' +
-                ' финансирования в 2017 году, Китай должен был выплатить 199 млн долларов США.',
-                tag: 'Мир' + ' ' + 'Политика'
-            },
-            {
-                id: '8',
-                title: 'Кому выгоден уход Флинна в отставку?',
-                summary: 'Генерал-лейтенант в отставке Майкл Флинн из-за оказанного на него давления' +
-                ' ушел с поста советника по национальной безопасности, не проработав на нем и месяца.',
-                createdAt: new Date('16 February 2017 16:51'),
-                author: 'Иносми',
-                content: 'Отставка Флинна отразится на всем Вашингтоне и на мировом сообществе,' +
-                ' а ее последствия для внешней политики администрации Трампа начнут сказываться лишь' +
-                ' через какое-то время. Но уже сейчас можно определить, кто от этого выиграл, а кто проиграл.',
-                tag: 'Мир' + ' ' + 'Аналитика' + ' ' + 'Политика'
-            },
-            {
-                id: '9',
-                title: 'Варшава ожидает возвращения 400 тысяч поляков после Brexit',
-                summary: 'До 400 тысяч поляков, живущих в Великобритании, могут лишиться' +
-                ' права постоянного проживания в стране после Brexit',
-                createdAt: new Date('27 February 2017 14:04'),
-                author: 'РИА "Новости"',
-                content: '"Трудно точно определить, сколько поляков после Brexit не подойдут для' +
-                ' постоянного места жительства, следует считать, что эта проблема может коснуться' +
-                ' 120-400 тысяч человек. Поэтому можно рассчитывать, что часть поляков (как ожидается,' +
-                ' 100-200 тысяч), живущих в Великобритании, примут решение вернуться в страну", —' +
-                ' говорится в сообщении ведомства, которое цитирует интернет-портал Onet.',
-                tag: 'Мир' + ' ' + 'Экономика' + ' ' + 'Политика'
-            },
-            {
-                id: '10',
-                title: '3 года после Майдана: что стало с экономикой Украины',
-                summary: 'На прошлой неделе Украина отмечала очередную годовщину Майдана,' +
-                ' хотя с точки зрения экономики поводов для радости нет.',
-                createdAt: new Date('27 February 2017 15:53'),
-                author: 'VestiFinance.ru',
-                content: 'Временное правительство было сформировано 27 февраля 2014 г., поэтому именно' +
-                ' эту дату стоит взять за точку отсчета. Новые власти, несмотря на все обещания, заверения' +
-                ' и амбиции, не только не смогли улучшить жизнь своих граждан, но и вообще как-то стабилизировать экономику.',
-                tag: 'Экономика' + ' ' + 'Аналитика' + ' ' + 'Политика'
-            }
-
-        ];
-        var a = JSON.stringify(array);
-        localStorage.setItem("A", a);
-        var tempStrCr = localStorage.getItem("A");
-        var tempCr = JSON.parse(tempStrCr, function (key, value) {
-            if (key == "createdAt") {
-                return new Date(value);
-            }
-            return value;
-        });
-        arr = tempCr;
-    }
-    function rebuiltStorage(Narr)
-	{
-		console.log("Storage size was="+localStorage.length);
-		localStorage.clear();
-        var a = JSON.stringify(Narr);
-        localStorage.setItem("A", a);
-        var tempStr = localStorage.getItem("A");
-        var temp = JSON.parse(tempStr, function (key, value) {
-            if (key == "createdAt") {
-                return new Date(value);
-            }
-            return value;
-        });
-        arr = temp;
-        console.log("Changed to:"+localStorage.length);
-	}
-    function returnUserMass()    {
-        return userMass;
-    }
     function addZero(i) {
         if (i < 10) {
             i = "0" + i;
         }
         return i;
     }
-
-    function funcSortArticleMass() {
-        function comparator(a, b) {
-            var firstDay = a.createdAt.getTime();
-            var secondDay = b.createdAt.getTime();
-            return secondDay - firstDay;
-        }
-
-        console.log('Articles sorting ...');
-        arr.sort(comparator);
-        console.log('Sorted' + '<br>');
+    function getTagMass()
+    {
+        var temp = tagMass;
+        return temp;
     }
-
     function funcSortMass(mass) {
         function comparator(a, b) {
-            var firstDay = a.createdAt.getTime();
-            var secondDay = b.createdAt.getTime();
+            var firstDay = new Date(a.createdAt).getTime();
+            var secondDay = new Date(b.createdAt).getTime();
             return secondDay - firstDay;
         }
-
         console.log('Massive sorting ...');
         mass.sort(comparator);
         console.log('Sorted' + '<br>');
     }
 
-    function funcLookArticleMass() {
-        console.log('List of articles' + '<br>');
-        for (var i = 0; i < arr.length; i++) {
-            console.log(arr[i].id.toString() + ' ' + addZero(arr[i].createdAt.getUTCHours()).toString() + ':' + addZero(arr[i].createdAt.getUTCMinutes()).toString() + ' ' +
-                arr[i].createdAt.getUTCDate().toString() + '-' + addZero(arr[i].createdAt.getUTCMonth()).toString() + '-' + arr[i].createdAt.getFullYear().toString() + '<br>');
-            console.log(arr[i].title + '<br>' + arr[i].author + ' ' + arr[i].tag + '<br>');
-        }
-    }
-
-    function getIdByArticle(article) {
-        for (var i = 0; i < numberOfNews; i++) {
-            if (article == arr[i]) {
-                return arr[i].id;
-            }
-        }
-        return undefined;
-    }
-
-    function getArticle(look_id) {
+   function getArticle(look_id) {
         console.log('getArticle function called, id of object:' + look_id + '<br>');
-        for (var i = 0; i < arr.length; i++) {
-            if (arr[i].id == look_id) {
-                console.log('Founded' + '<br>');
-                return arr[i];
-            }
-        }
-        console.log('Not Founded' + '<br>');
-        return undefined;
-    }
-    function getArticleByTitle(title)
-    {
-        console.log('getArticleByTitle called, title = '+ title+'<br>');
-        for (var i = 0; i < arr.length; i++) {
-            if (arr[i].title == title) {
-                console.log('Founded' + '<br>');
-                return arr[i];
-            }
-        }
-        console.log('Not Founded' + '<br>');
-        return undefined;
-    }
-    function addArticle(article) {
-        function validateArticle(article) {
-            function validate_date(value) {
-                try {
-                    var regex = /[0-9][0-9]?/
-                    if (!(regex.test(value.getHours()))) {
-                        return false;
-                    }
-                    if (!(regex.test(value.getUTCMinutes()))) {
-                        return false;
-                    }
-                    if (!(regex.test(value.getUTCDate()))) {
-                        return false;
-                    }
-                    if (value.getUTCMonth() < 0) {
-                        return false;
-                    }
-                    if (value.getUTCMonth() >= 13) {
-                        return false;
-                    }
-                    var yearRegex = /[0-9][0-9][0-9][0-9]/
-                    if (!(regex.test(value.getFullYear()))) {
-                        return false;
-                    }
-
-                } catch (e) {
-                    console.log(e.toString() + '<br>');
-                    return false;
-                }
-                return true;
-            }
-
-            console.log('validateArticle function called, id of article is:' + article.id + '<br>');
-            try {
-                var regexpId = /^[0-9]+$/;
-                if (!(regexpId.test(article.id.toString()))) {
-                    console.log('Not validate article' + '<br>');
-                    return false;
-                }
-                if (article.title.length <= 0) {
-                    console.log('Not validate article' + '<br>');
-                    return false;
-                }
-                if (article.title.length > 100) {
-                    console.log('Not validate article' + '<br>');
-                    return false;
-                }
-                if (!validate_date(article.createdAt)) {
-                    console.log('Not validate article' + '<br>');
-                    return false;
-                }
-                if (article.summary.length <= 0) {
-                    console.log('Not validate article' + '<br>');
-                    return false;
-                }
-                if (article.summary.length > 200) {
-                    console.log('Not validate article' + '<br>');
-                    return false;
-                }
-                if (article.author.length <= 0) {
-                    console.log('Not validate article' + '<br>');
-                    return false;
-                }
-                if (article.content.length <= 0) {
-                    console.log('Not validate article' + '<br>');
-                    return false;
-                }
-                if(!validateTags(article.tag))
-                {
-                    console.log('Not validate tags' + '<br>');
-                    return false;
-                }
-            } catch (e) {
-                console.log(e.toString() + '<br>');
-                return false;
-            }
-            console.log('Validate article' + '<br>');
-            return true;
-        }
-        function validateTags(tags)
-        {
-            var splitted_tags = (tags.toString()).split(/ /);
-            for(var i =0;i<splitted_tags.length;i++)
-            {
-                for(var j =0;j<tagMass.length;j++)
-                {
-                    if(j==tagMass.length-1)
-                    {
-                        if(splitted_tags[i]!=tagMass[j])
-                        {
-                            console.log("Error, tag elem="+splitted_tags[i]);
-                            return false;
-                        }
-                    }
-                    if(splitted_tags[i]==tagMass[j])
-                    {
-                        j=tagMass.length;
-                    }
-
-                }
-            }
-            console.log("good work");
-            return true;
-        }
-        console.log('addArticle function' + '<br>');
-        console.log(article.title + " " + article.tag + "<br>");
-        try {
-            if (article) {
-            }
-            article.id = global_id;
-            global_id++;
-            if (validateArticle(article)) {
-                arr[arr.length] = article;
-                numberOfNews = numberOfNews + 1;
-                return true;
-            }
-            else {
-                return false;
-            }
-            return false;
-        } catch (e) {
-            console.log(e.toString() + '<br>');
-            return false;
-        }
-    }
-
-    function editArticle(arId, changes) {
-        function getArticleNum(look_id) {
-            for (var i = 0; i < arr.length; i++) {
-                if (arr[i].id == look_id) {
-                    console.log("id founded - "+i);
-                    return i;
-                }
-            }
-            console.log("Id not founded");
-            return undefined;
-        }
-        console.log('edit article function called' + '<br>');
-        if (changes) {
-            var lookArt = getArticleNum(arId);
-            if (lookArt!=undefined) {
-                if (changes.title) {
-                    console.log("changed title");
-                    arr[lookArt].title = changes.title;
-                }
-                if (changes.summary) {
-                    console.log("changed summary");
-                    arr[lookArt].summary = changes.summary;
-                }
-                if (changes.content) {
-                    console.log("changed content");
-                    arr[lookArt].content = changes.content;
-                }
-                return true;
-            }
-        }
-        console.log("We do nothing");
-        return false;
+        var oReq = new XMLHttpRequest();
+        var get = oReq.addEventListener('load', function () {
+            var info = JSON.parse(this.responseText);
+            return info;
+        });
+        var text = '/user/' + look_id;
+        console.log(text);
+        oReq.open('get', text);
+        oReq.send();
+        console.log(get);
     }
 
     function removeArticle(arId) {
-        function getArticleNum(look_id) {
-            for (var i = 0; i < arr.length; i++) {
-                console.log(arr[i].id + " " + look_id);
-                if (arr[i].id == look_id) {
-                    console.log("Eto nomer ob'ekta" + i);
-                    return i;
-                }
-            }
-            return undefined;
-        }
-
-        console.log('remove article function called, id is:' + arId + '<br>');
-        var lookArt = getArticleNum(arId);
-        console.log(lookArt + " kekeks");
-        if (lookArt >= 0) {
-            arr.splice(lookArt, 1);
-            numberOfNews = numberOfNews - 1;
-        }
-
+        var oReq = new XMLHttpRequest();
+        oReq.addEventListener('load', function () {
+            workVar.newsList();
+            console.log("Delete news finished");
+        });
+        var text = '/delete/' + arId;
+        console.log(text);
+        oReq.open('DELETE', text);
+        oReq.send();
     }
 
-    function getArticles(skip, number) {
-        console.log('getArticle function' + '<br>');
-        funcSortArticleMass();
-        var regex = /^[0-9]+$/
-        if ((regex.test(skip)) && (regex.test(number))) {
-            var newArtMass = arr.slice(skip, skip + number);
-            return newArtMass;
-        }
-        else {
-            return undefined;
-        }
-    }
-
-    function getElemNumber() {
-        var res = numberOfNews;
-        return res;
-    }
-
-    function getFilteredArticles(skip, number, filter) {
+    function getFilteredArticles(mass, skip, number, filter) {
         console.log('getFilteredArticle function' + '<br>');
-        funcSortArticleMass();
+        funcSortMass(mass);
         var regex = /^[0-9]+$/
         if ((regex.test(skip)) && (regex.test(number))) {
             if (filter) {
@@ -611,19 +64,19 @@ function lock(){
                     var Tskip = skip;
                     var Tnumber = number;
                     var tempMass = [];
-                    for (var i = 0; i < arr.length; i++) {
-                        console.log("Сравниваю :"+arr[i].author+" & "+filter.author);
-                        if (arr[i].author == filter.author) {
+                    for (var i = 0; i < mass.length; i++) {
+                        console.log("Сравниваю :" + mass[i].author + " & " + filter.author);
+                        if (mass[i].author == filter.author) {
                             if (Tskip > 0) {
                                 Tskip = Tskip - 1;
                             }
                             else {
                                 if (Tnumber > 0) {
-                                    tempMass.push(arr[i]);
+                                    tempMass.push(mass[i]);
                                     Tnumber--;
                                 }
                                 else {
-                                    i = arr.length + 10;
+                                    i = mass.length + 10;
                                 }
                             }
                         }
@@ -633,32 +86,28 @@ function lock(){
                     return newArrMass;
                 }
                 if (filter.tag) {
-                    console.log("kekes");
                     var Tskip = skip;
                     var Tnumber = number;
                     var tempMass = [];
-                    for (var i = 0; i < arr.length; i++) {
-                        console.log(arr[i].tag + " " + filter.tag);
-                        if (arr[i].tag.indexOf(filter.tag) >= 0) {
+                    for (var i = 0; i < mass.length; i++) {
+                        console.log(mass[i].tag + " " + filter.tag);
+                        if (mass[i].tag.indexOf(filter.tag) >= 0) {
 
                             if (Tskip > 0) {
                                 Tskip = Tskip - 1;
                             }
                             else {
-                                console.log("2keks" + Tnumber);
                                 if (Tnumber > 0) {
-                                    tempMass.push(arr[i]);
-                                    console.log(arr[i].title + "element dobavlen");
+                                    tempMass.push(mass[i]);
+                                    console.log(mass[i].title + "element dobavlen");
                                     Tnumber--;
                                 }
                                 else {
-                                    i = arr.length + 1;
+                                    i = mass.length + 1;
                                 }
                             }
                         }
                     }
-					/* var newArrMass;
-					 newArrMass = tempMass.slice(skip, skip + number);*/
                     console.log(tempMass[0]);
                     return tempMass;
                 }
@@ -667,12 +116,7 @@ function lock(){
         return undefined;
     }
 
-    function getMass(){
-        return arr;
-    }
-
-    function getAuthorMass()
-    {
+    function getAuthorMass() {
         function lookInAuthors(newAuthor) {
             for (var i = 0; i < authorsMass.length; i++) {
                 if (authorsMass[i] == newAuthor) {
@@ -691,49 +135,131 @@ function lock(){
             authMass.sort(comparator);
         }
         var authorsMass = new Array();
-        for (var j = 0; j < arr.length; j++) {
-            var g = lookInAuthors(arr[j].author);
-            if (g) {
-                console.log("author added");
-                authorsMass.push(arr[j].author);
-            }
-        }
-        sortAuthorMass(authorsMass);
+        var oReq = new XMLHttpRequest();
+        var get = oReq.addEventListener('load', function () {
+            var info = JSON.parse(this.responseText);
+            return info;
+        });
+        var text = '/user/' + look_id;
+        console.log(text);
+        oReq.open('get', text);
+        oReq.send();
+        console.log(get);
         return authorsMass;
     }
+    function validateArticle(article) {
+        function validate_date(value) {
+            try {
+                var regex = /[0-9][0-9]?/
+                if (!(regex.test(value.getHours()))) {
+                    return false;
+                }
+                if (!(regex.test(value.getUTCMinutes()))) {
+                    return false;
+                }
+                if (!(regex.test(value.getUTCDate()))) {
+                    return false;
+                }
+                if (value.getUTCMonth() < 0) {
+                    return false;
+                }
+                if (value.getUTCMonth() >= 13) {
+                    return false;
+                }
+                var yearRegex = /[0-9][0-9][0-9][0-9]/
+                if (!(regex.test(value.getFullYear()))) {
+                    return false;
+                }
+
+            } catch (e) {
+                console.log(e.toString() + '<br>');
+                return false;
+            }
+            return true;
+        }
+        function validateTags(tags) {
+            var splitted_tags = tags.split(/ /);
+            for (var i = 0; i < splitted_tags.length; i++) {
+                for (var j = 0; j < tagMass.length; j++) {
+                    if (j == tagMass.length - 1) {
+                        if (splitted_tags[i] != tagMass[j]) {
+                            console.log("Error, tag elem=" + splitted_tags[i]);
+                            return false;
+                        }
+                    }
+                    if (splitted_tags[i] == tagMass[j]) {
+                        j = tagMass.length;
+                    }
+
+                }
+            }
+            console.log("good work");
+            return true;
+        }
+        console.log('validateArticle function called, article is:');
+        console.log(article);
+        try {
+            if (article.title.length <= 0) {
+                console.log('Not validate article' + '<br>');
+                return false;
+            }
+            if (article.title.length > 100) {
+                console.log('Not validate article' + '<br>');
+                return false;
+            }
+            if (!validate_date(article.createdAt)) {
+                console.log('Not validate article' + '<br>');
+                return false;
+            }
+            if (article.summary.length <= 0) {
+                console.log('Not validate article' + '<br>');
+                return false;
+            }
+            if (article.summary.length > 200) {
+                console.log('Not validate article' + '<br>');
+                return false;
+            }
+            if (article.author.length <= 0) {
+                console.log('Not validate article' + '<br>');
+                return false;
+            }
+            if (article.content.length <= 0) {
+                console.log('Not validate article' + '<br>');
+                return false;
+            }
+            console.log("Вызываю функцию validateTags, аргумент - ");
+            console.log(article.tag);
+            if (!validateTags(article.tag)) {
+                console.log('Not validate tags' + '<br>');
+                return false;
+            }
+        } catch (e) {
+            console.log(e.toString() + '<br>');
+            return false;
+        }
+        console.log('Validate article' + '<br>');
+        return true;
+    }
     return {
-        addFunc:addArticle,
-        removeFunc:removeArticle,
-        editFunc:editArticle,
-        getMassFunc:getMass,
-        getFilteredMassFunc:getFilteredArticles,
-        sortMass:funcSortMass,
-        getAuthors:getAuthorMass,
-        userMass:returnUserMass,
-        getArticleByTitle:getArticleByTitle,
-        getArticle:getArticle,
-		rebilt:rebuiltStorage,
-        reload:reloadLocalStorage
+        removeFunc: removeArticle,
+        getFilteredMassFunc: getFilteredArticles,
+        sortMass: funcSortMass,
+        getAuthors: getAuthorMass,
+        getArticle: getArticle,
+        tagMass: getTagMass,
+        validateArticle: validateArticle
     };
-
-
 }
 function workWithWindow() {
 
     var workingFunc = lock();
     function deleteNews(id) {/*эта функция уже подключена к кнопке, через консоль её запустить можно, но трудно*/
+        console.log("Delete news called");
         var splitter = id.split(/[<>]/);
         console.log(splitter[2] + "|<br>");
         workingFunc.removeFunc(splitter[2]);
-        getNewsList(workingFunc.getMassFunc());
-        getCommonNewsList();
     }
-    function reload()
-    {
-        workingFunc.reload();
-        workVar.newsList();
-        workVar.commonNewsList();
-    }
+
     function getNewsList(G_array) {
         function addZero(i) {
             if (i < 10) {
@@ -741,134 +267,224 @@ function workWithWindow() {
             }
             return i;
         }
-
-
+        console.log("getNewsList called, parameter =");
+        console.log(G_array);
         var array = G_array;
         var visible = workVar.visibility();
-
-        if(!array)
-        {
-            console.log("peredan pustoy parameter");
-            array=workingFunc.getMassFunc();
-        }
-        var div1 = document.querySelector(".scrollMain");
-        while (div1.firstElementChild) {
-            div1.removeChild(div1.firstChild);
-        }
-        for (var i = 0; i < array.length; i++) {
-            var obj1 = document.createElement('div');
-            obj1.className = "newsBlock";
-            var time = addZero(array[i].createdAt.getUTCDate()).toString() + " "
-                + addZero(array[i].createdAt.getUTCMonth() + 1).toString()
-                + "    " + array[i].createdAt.getHours() + ":" +
-                addZero(array[i].createdAt.getMinutes());
-            var newsName = array[i].title;
-            var author = array[i].author;
-            var tags = array[i].tag;
-            var splitted_tags = (tags.toString()).split(/ /);
-            obj1.innerHTML = time + ' ' + "<news onclick='workVar.getFullNews(this.innerText)'>" + newsName + "</news>" + "<br>" +
-                "Источник:" + "<a>___</a>" + '<author onclick="workVar.authorsArticle()">' + author +  "</author> " + "<a>___</a>" +
-                "Теги:" + "<a>__</a>";
-
-
-            for (var j = 0; j < splitted_tags.length; j++) {
-                obj1.innerHTML = obj1.innerHTML + '<tag  onclick="workVar.tagNews({tag:this.innerText})">' + splitted_tags[j] + "<a>__</a>" + "</tag>";
+        if (array == undefined) {
+            console.log("array==undefined");
+            var oReq = new XMLHttpRequest();
+            console.log("oReq created");
+            function cleanUp() {
+                oReq.removeEventListener('load', handler);
             }
-            console.log("title=" + array[i].title + ", id=" + array[i].id + '<br>');
-            obj1.innerHTML = obj1.innerHTML + "<br>" + '<delete onclick="workVar.deleteNews(this.innerHTML)">' +
-                "Удалить новость" + "<a>" + array[i].id + "</a>" + "</delete> <change onclick='workVar.change(this.innerHTML)'>Изменить <a>"+array[i].id+"</a></change>" + "<br>";
-            div1.appendChild(obj1);
-            var probel = document.createElement('div');
-            probel.innerHTML = "<br>" + " ";
-            div1.appendChild(probel);
-
-        }
-        var deleteElem = document.querySelectorAll('delete');
-        var changeElem = document.querySelectorAll('change')
-        var addNewNewsButton = document.querySelector('.createNewNewsButton');
-        var n = deleteElem.length;
-        var nC = changeElem.length;
-        if(visible=="none")
-        {
-            console.log("none");
-            for(var i =0;i<n;i++)
-            {
-                deleteElem[i].style.display="none";
+            function handler() {
+                function addZero(i) {
+                    if (i < 10) {
+                        i = "0" + i;
+                    }
+                    return i;
+                }
+                var div1 = document.getElementById("main");
+                console.log("Hello, I'm here");
+                while (div1.firstElementChild) {
+                    div1.removeChild(div1.firstChild);
+                }
+                var text = JSON.parse(this.responseText);
+                cleanUp();
+                console.log(text);
+                workVar.newsList(text);
+                getCommonNewsListInsideFunc(text);
+                console.log("getNewsList finished");
             }
-            for(var j=0;j<nC;j++)
-            {
-                changeElem[j].style.display="none";
-            }
-            addNewNewsButton.style.display="none";
+            oReq.addEventListener('load', handler);
+            console.log("Event listener added");
+            oReq.open('GET', '/array');
+            console.log("Try to GET /array");
+            oReq.send();
         }
-        if(visible=="block")
-        {
-            console.log("block");
-            for(var i =0;i<n;i++)
-            {
-                deleteElem[i].style.display="block";
+        else {
+            console.log("Передан ненулевой параметр");
+            var div1 = document.querySelector(".scrollMain");
+            while (div1.firstElementChild) {
+                div1.removeChild(div1.firstChild);
             }
-            for(var j=0;j<nC;j++)
-            {
-                changeElem[j].style.display="block";
+            for (var i = 0; i < array.length; i++) {
+                var obj1 = document.createElement('div');
+                obj1.className = "newsBlock";
+                var newsName = array[i].title;
+                var author = array[i].author;
+                var tags = array[i].tag;
+                var Ctime = new Date(array[i].createdAt);
+                var time = addZero(Ctime.getUTCDate()).toString() + " "
+                    + addZero(Ctime.getUTCMonth() + 1).toString()
+                    + "    " + Ctime.getHours() + ":" +
+                    addZero(Ctime.getMinutes());
+                var splitted_tags = (tags.toString()).split(/ /);
+                obj1.innerHTML = time + ' ' + "<news onclick='workVar.getFullNews(this.innerText)'>" + newsName + "</news>" + "<br>" +
+                    "Источник:" + "<a>___</a>" + '<author onclick="workVar.authorsArticle()">' + author + "</author> " + "<a>___</a>" +
+                    "Теги:" + "<a>__</a>";
+                for (var j = 0; j < splitted_tags.length; j++) {
+                    obj1.innerHTML = obj1.innerHTML + '<tag  onclick="workVar.tagNews({tag:this.innerText})">' + splitted_tags[j] + "<a>__</a>" + "</tag>";
+                }
+                console.log("title=" + array[i].title + ", id=" + array[i].id + '<br>');
+                obj1.innerHTML = obj1.innerHTML + "<br>" + '<delete onclick="workVar.deleteNews(this.innerHTML)">' +
+                    "Удалить новость" + "<a>" + array[i].id + "</a>" + "</delete> <change onclick='workVar.change(this.innerHTML)'>Изменить <a>" + array[i].id + "</a></change>" + "<br>";
+                div1.appendChild(obj1);
+                var probel = document.createElement('div');
+                probel.innerHTML = "<br>" + " ";
+                div1.appendChild(probel);
             }
-            addNewNewsButton.style.display="inline-block";
+            var deleteElem = document.querySelectorAll('delete');
+            var changeElem = document.querySelectorAll('change')
+            var addNewNewsButton = document.querySelector('.createNewNewsButton');
+            var n = deleteElem.length;
+            var nC = changeElem.length;
+            if (visible == "none") {
+                console.log("none");
+                for (var i = 0; i < n; i++) {
+                    deleteElem[i].style.display = "none";
+                }
+                for (var j = 0; j < nC; j++) {
+                    changeElem[j].style.display = "none";
+                }
+                addNewNewsButton.style.display = "none";
+            }
+            if (visible == "block") {
+                console.log("block");
+                for (var i = 0; i < n; i++) {
+                    deleteElem[i].style.display = "block";
+                }
+                for (var j = 0; j < nC; j++) {
+                    changeElem[j].style.display = "block";
+                }
+                addNewNewsButton.style.display = "inline-block";
+            }
+            addNewNewsButton.addEventListener('click', workVar.createNews);
+            var authorElements = document.querySelectorAll('author');
+            var authN = authorElements.length;
+            console.log(authN + " eto kolichestvo elementov");
+            for (var i = 0; i < authN; i++) {
+                authorElements[i].addEventListener('click', workVar.authorsArticle);
+            }
+            var authorComm = document.querySelector('authorCommon');
+            authorComm.addEventListener('click', workVar.authors);
+            console.log("getNewsList finished");
         }
-        addNewNewsButton.addEventListener('click',workVar.createNews);
-        var authorElements = document.querySelectorAll('author');
-        var authN = authorElements.length;
-        console.log(authN+" eto kolichestvo elementov");
-        for(var i =0;i<authN;i++)
-        {
-            authorElements[i].addEventListener('click',workVar.authorsArticle);
-        }
-        var authorComm = document.querySelector('authorCommon');
-        authorComm.addEventListener('click',workVar.authors);
-
-		workingFunc.rebilt(workingFunc.getMassFunc());
     }
-    function showFullNews(title)
-    {
+
+    function showFullNews(title) {
+        console.log("showFullNews called");
         function addZero(i) {
             if (i < 10) {
                 i = "0" + i;
             }
             return i;
         }
+        var oReq = new XMLHttpRequest();
+        console.log("oReq created");
+        function cleanUp() {
+            oReq.removeEventListener('load', handler);
+        }
 
-        var article = workingFunc.getArticleByTitle(title);
-        var div1 = document.querySelector(".scrollMain");
-        while (div1.firstElementChild) {
-            div1.removeChild(div1.firstChild);
+        function handler() {
+            function addZero(i) {
+                if (i < 10) {
+                    i = "0" + i;
+                }
+                return i;
+            }
+            var div1 = document.getElementById("main");
+            console.log("Hello, I'm here");
+            while (div1.firstElementChild) {
+                div1.removeChild(div1.firstChild);
+            }
+            var text = JSON.parse(this.responseText);
+            console.log(text);
+            var div1 = document.querySelector(".scrollMain");
+            while (div1.firstElementChild) {
+                div1.removeChild(div1.firstChild);
+            }
+            var id = -1;
+            for (var i = 0; i < text.length; i++) {
+                if (text[i].title == title) {
+                    id = i;
+                }
+            }
+            var obj = document.createElement('div');
+            obj.className = "fullNewsBlock";
+            console.log("id=" + id);
+
+            if (id != -1) {
+                var Ctime = new Date(text[id].createdAt);
+                var time = addZero(Ctime.getUTCDate()).toString() + " "
+                    + addZero(Ctime.getUTCMonth() + 1).toString()
+                    + "    " + Ctime.getHours() + ":" +
+                    addZero(Ctime.getMinutes());
+                var splitted_tags = (text[id].tag.toString()).split(/ /);
+                var newsName = text[id].title;
+                var author = text[id].author;
+                obj.innerHTML = time + ' ' + "<news>" + newsName + "</news>" + "<br>" + "<justText>" + text[id].summary + "</justText>" +
+                    "<br><br>" + "<justText>" + text[id].content + "</justText>" + "<br><br>" +
+                    "Источник:" + "<a>___</a>" + '<author onclick="workVar.getAuthorsArticlesParam(this.innerText)">' + author + "</author> " + "<a>___</a>" +
+                    "Теги:" + "<a>__</a>";
+                for (var j = 0; j < splitted_tags.length; j++) {
+                    obj.innerHTML = obj.innerHTML + '<tag  onclick="workVar.tagNews({tag:this.innerText})">' + splitted_tags[j] + "<a>__</a>" + "</tag>";
+                }
+                div1.appendChild(obj);
+            }
+            cleanUp();
         }
-        var obj =document.createElement('div');
-        obj.className ="fullNewsBlock";
-        var time = addZero(article.createdAt.getUTCDate()).toString() + " "
-            + addZero(article.createdAt.getMonth() + 1).toString()+" "+article.createdAt.getYear()+
-            + " " + article.createdAt.getHours() + ":" +
-            addZero(article.createdAt.getMinutes());
-        var newsName = article.title;
-        var author = article.author;
-        var tags = article.tag;
-        var splitted_tags = (tags.toString()).split(/ /);
-        obj.innerHTML = time + ' ' + "<news>" + newsName + "</news>" + "<br>" +"<justText>"+article.summary+"</justText>"+
-            "<br><br>"+"<justText>"+article.content+"</justText>"+"<br><br>"+
-            "Источник:" + "<a>___</a>" + '<author onclick="workVar.getAuthorsArticlesParam(this.innerText)">' + author +  "</author> " + "<a>___</a>" +
-            "Теги:" + "<a>__</a>";
-        for (var j = 0; j < splitted_tags.length; j++) {
-            obj.innerHTML = obj.innerHTML + '<tag  onclick="workVar.tagNews({tag:this.innerText})">' + splitted_tags[j] + "<a>__</a>" + "</tag>";
-        }
-        div1.appendChild(obj);
+        oReq.addEventListener('load', handler);
+        console.log("Event listener added");
+        oReq.open('GET', '/array');
+        console.log("Try to GET /array");
+        oReq.send();
+        console.log("showFullNews finished");
     }
+
     function getCommonNewsList() {
+        console.log("getCommonNewsList called");
+        var text;
+        var oReq = new XMLHttpRequest();
+        console.log("oReq created");
+        function cleanUp() {
+            oReq.removeEventListener('load', handler);
+        }
+        function handler() {
+            function addZero(i) {
+                if (i < 10) {
+                    i = "0" + i;
+                }
+                return i;
+            }
+            var div1 = document.getElementById("main");
+            console.log("Hello, I'm here");
+            while (div1.firstElementChild) {
+                div1.removeChild(div1.firstChild);
+            }
+            text = JSON.parse(this.responseText);
+            console.log(text);
+            getCommonNewsListInsideFunc(text);
+            cleanUp();
+        }
+        oReq.addEventListener('load', handler);
+        console.log("Event listener added");
+        oReq.open('GET', '/array');
+        console.log("Try to GET /array");
+        oReq.send();
+        console.log("getCommonNewsList finished");
+    }
+
+    function getCommonNewsListInsideFunc(array) {
+        console.log("getCommonNewsListInsideFunc called");
         function addZero(i) {
             if (i < 10) {
                 i = "0" + i;
             }
             return i;
         }
-
-        var articleMass = workingFunc.getMassFunc();
+        var articleMass = array;
         var div2 = document.querySelector(".scrollAll");
         while (div2.firstElementChild) {
             div2.removeChild(div2.firstChild);
@@ -876,79 +492,111 @@ function workWithWindow() {
         var obj = document.createElement('div');
         obj.className = "all_newsBlock";
         for (var i = 0; i < articleMass.length; i++) {
-            var time = articleMass[i].createdAt.getHours() + ":" + addZero(articleMass[i].createdAt.getMinutes());
+            var Ctime = new Date(articleMass[i].createdAt);
+            var time = Ctime.getHours() + ":" +
+                addZero(Ctime.getMinutes());
             var newsName = articleMass[i].title;
             var newsObj = time + " " + "<news onclick='workVar.getFullNews(this.innerText)'>" + newsName + "</news>" + "<br>";
             obj.innerHTML = obj.innerHTML + newsObj;
         }
         div2.appendChild(obj);
+        console.log("getCommonNewsListInsideFunc finished");
     }
-    function changeNews(id)
-    {
+    function changeNews(id) {
+        console.log("change news called");
+        var splitter = id.split(/[<>]/);
+        console.log(splitter[2] + "|<br>");
+        var oReq = new XMLHttpRequest();
+        oReq.addEventListener('load', function () {
+            var info = JSON.parse(this.responseText);//массив новостей
+            console.log(info);
+            for (var i = 0; i < info.length; i++) {
+                console.log(info[i].id + " , i=" + i);
+                if (info[i].id == splitter[2]) {
+                    changeNewsInsideFunc(info[i], i);
+                    i = info.length + 1;
+                }
+            }
+        });
+        oReq.open('get', '/array');
+        oReq.send();
+    }
+
+    function changeNewsInsideFunc(article, number) {
         function addZero(i) {
             if (i < 10) {
                 i = "0" + i;
             }
             return i;
         }
-        function changeButtonClicked()
-        {
+        function changeButtonClicked() {
             var titleTextPole = document.getElementById('titleInId');
             var summaryTextPole = document.getElementById('summaryInId');
             var contentTextPole = document.getElementById("contentInId");
             var title = titleTextPole.value;
             var summary = summaryTextPole.value;
             var content = contentTextPole.value;
-            console.log("aaaa  "+title+" "+summary+" "+content);
-            workVar.editNews(splitter[2],{title:title,summary:summary,content:content});
+            console.log("aaaa  " + title + " " + summary + " " + content);
+            var oReq = new XMLHttpRequest();
+            oReq.addEventListener('load', function () {
+                console.log("I'm in");
+                getNewsList();
+            });
+            oReq.open('put', '/array');
+            oReq.setRequestHeader('content-type', 'application/json');
+            const body = JSON.stringify({
+                number: number,
+                title: title,
+                summary: summary,
+                content: content
+            });
+            console.log(body);
+            oReq.send(body);
         }
-        var splitter = id.split(/[<>]/);
-        console.log(splitter[2] + "|<br>");
-        var article = workingFunc.getArticle(splitter[2]);
-
         var div1 = document.querySelector(".scrollMain");
         while (div1.firstElementChild) {
             div1.removeChild(div1.firstChild);
         }
         var textTitle = document.createElement('div');
-        textTitle.innerText="Vvedite title";
+        textTitle.innerText = "Vvedite title";
         var titleIn = document.createElement('my_input');
-        titleIn.innerHTML = "<textarea type='text' class='my_input' id='titleInId'>"+article.title+"</textarea>";
+        titleIn.innerHTML = "<textarea type='text' class='my_input' id='titleInId'>" + article.title + "</textarea>";
 
         div1.appendChild(textTitle);
         div1.appendChild(titleIn);
 
         var textSummary = document.createElement('div');
-        textSummary.innerText="Vvedite summary";
+        textSummary.innerText = "Vvedite summary";
         var summaryIn = document.createElement('my_input');
-        summaryIn.innerHTML = "<textarea type='text' class='my_input' id='summaryInId'>"+article.summary+"</textarea>";
+        summaryIn.innerHTML = "<textarea type='text' class='my_input' id='summaryInId'>" + article.summary + "</textarea>";
         div1.appendChild(textSummary);
         div1.appendChild(summaryIn);
 
         var textC = document.createElement('div');
-        textC.innerText="Vvedite content";
+        textC.innerText = "Vvedite content";
         var CIn = document.createElement('my_input');
-        CIn.innerHTML = "<textarea type='text' class='my_input' id='contentInId' >"+article.content+"</textarea>";
+        CIn.innerHTML = "<textarea type='text' class='my_input' id='contentInId' >" + article.content + "</textarea>";
         div1.appendChild(textC);
         div1.appendChild(CIn);
 
         var probel = document.createElement('div');
-        probel.innerHTML="<br><br>";
+        probel.innerHTML = "<br><br>";
         div1.appendChild(probel);
 
         var ChangeNewsButton = document.createElement('button');
         ChangeNewsButton.innerHTML = "<a>___</a><text> Change </text><a>___</a>";
-        ChangeNewsButton.addEventListener('click',changeButtonClicked);
+        ChangeNewsButton.addEventListener('click', changeButtonClicked);
         div1.appendChild(ChangeNewsButton);
 
         var probel2 = document.createElement('div');
-        probel2.innerHTML="<br><br>";
+        probel2.innerHTML = "<br><br>";
         div1.appendChild(probel2);
+        console.log("change news finished");
     }
-    function createNewNews()
-    {
-        function addButtonClicked()
-        {
+
+    function createNewNews() {
+        console.log("createNewNews called");
+        function addButtonClicked() {
             var titleTextPole = document.getElementById('titleInId');
             var summaryTextPole = document.getElementById('summaryInId');
             var authorTextPole = document.getElementById("authorInId");
@@ -961,73 +609,74 @@ function workWithWindow() {
             var author = authorTextPole.value;
             var content = contentTextPole.value;
             var tags = tagTextPole.value
-            console.log("aaaa  "+title+" "+summary+" "+date+" "+author+" "+content+" "+tags);
-            workVar.add(title,summary,date,author,content,tags);
+            console.log("aaaa  " + title + " " + summary + " " + date + " " + author + " " + content + " " + tags);
+            workVar.add(title, summary, date, author, content, tags);
         }
         var div1 = document.querySelector(".scrollMain");
         while (div1.firstElementChild) {
             div1.removeChild(div1.firstChild);
         }
         var textTitle = document.createElement('div');
-        textTitle.innerText="Vvedite title";
+        textTitle.innerText = "Vvedite title";
         var titleIn = document.createElement('my_input');
         titleIn.innerHTML = "<textarea type='text' class='my_input' id='titleInId'>";
         div1.appendChild(textTitle);
         div1.appendChild(titleIn);
 
         var textSummary = document.createElement('div');
-        textSummary.innerText="Vvedite summary";
+        textSummary.innerText = "Vvedite summary";
         var summaryIn = document.createElement('my_input');
         summaryIn.innerHTML = "<textarea type='text' class='my_input' id='summaryInId'>";
         div1.appendChild(textSummary);
         div1.appendChild(summaryIn);
 
         var textA = document.createElement('div');
-        textA.innerText="Vvedite authora";
+        textA.innerText = "Vvedite authora";
         var AIn = document.createElement('my_input');
         AIn.innerHTML = "<input type='text' id='authorInId' >";
         div1.appendChild(textA);
         div1.appendChild(AIn);
 
         var textDate = document.createElement('div');
-        textDate.innerText="Vvedite datu";
+        textDate.innerText = "Vvedite datu";
         var DateIn = document.createElement('my_input');
         DateIn.innerHTML = "<input type='text' id='DateInId' placeholder='Пример:1 January 1111 10:10'>";
         div1.appendChild(textDate);
         div1.appendChild(DateIn);
 
         var textC = document.createElement('div');
-        textC.innerText="Vvedite content";
+        textC.innerText = "Vvedite content";
         var CIn = document.createElement('my_input');
         CIn.innerHTML = "<textarea type='text' class='my_input' id='contentInId' >";
         div1.appendChild(textC);
         div1.appendChild(CIn);
 
         var textTag = document.createElement('div');
-        textTag.innerText="Vvedite tagi";
+        textTag.innerText = "Vvedite tagi";
         var TagIn = document.createElement('my_input');
         TagIn.innerHTML = "<input type='text' id='TagInId'>";
         div1.appendChild(textTag);
         div1.appendChild(TagIn);
 
         var probel = document.createElement('div');
-        probel.innerHTML="<br><br>";
+        probel.innerHTML = "<br><br>";
         div1.appendChild(probel);
         var AddNewsButton = document.createElement('button');
         AddNewsButton.innerHTML = "<a>___</a><text> Add </text><a>___</a>";
 
-        AddNewsButton.addEventListener('click',addButtonClicked);
+        AddNewsButton.addEventListener('click', addButtonClicked);
         div1.appendChild(AddNewsButton);
         var probel2 = document.createElement('div');
-        probel2.innerHTML="<br><br>";
+        probel2.innerHTML = "<br><br>";
         div1.appendChild(probel2);
+        console.log("createNewNews finished");
     }
 
     function addNewNews(title1, summary1, createdAt1, author1, content1, tag1) {
-        console.log("AddNewNews func called: title = "+ title1+" , summary="+summary1+
-            " , createdAt="+createdAt1+" ,author="+author1+" ,content="+content1+" ,tag="+tag1);
+        console.log("AddNewNews func called: title = " + title1 + " , summary=" + summary1 +
+            " , createdAt=" + createdAt1 + " ,author=" + author1 + " ,content=" + content1 + " ,tag=" + tag1);
         var time = new Date(createdAt1);
-        var newArt = {
+        var article = {
             title: title1,
             summary: summary1,
             createdAt: time,
@@ -1035,30 +684,35 @@ function workWithWindow() {
             content: content1,
             tag: tag1
         };
-        var result = workingFunc.addFunc(newArt);
-        if(!result)
-        {
+        if (workingFunc.validateArticle(article)) {
+           const body = JSON.stringify(article);
+            var oReq = new XMLHttpRequest();
+            oReq.addEventListener('load', function () {
+                getNewsList();
+                console.log("AddNewNews func finished");
+            });
+            oReq.open('post', '/array');
+            oReq.setRequestHeader('content-type', 'application/json');
+            oReq.send(body);
+        }
+        else{
+            getNewsList();
             alert("Error in adding new news");
         }
-        else
-        {
-            alert("good");
-        }
-        getNewsList(workingFunc.getMassFunc());
-        getCommonNewsList();
     }
 
-
     function rebildNews(id, Nchanges) {
+        console.log("rebildNewsFunc called");
         workingFunc.editFunc(id, Nchanges);
         getNewsList(workingFunc.getMassFunc());
         getCommonNewsList();
+        console.log("rebildNewsFunc finished");
     }
 
     function changeUserName(user) {
-
+        console.log("changeUserName called");
         console.log("Prinyato imya=" + user);
-        userName=user;
+        userName = user;
         var div1 = document.querySelector(".userName");
         while (div1.firstElementChild) {
             div1.removeChild(div1.firstChild);
@@ -1066,12 +720,11 @@ function workWithWindow() {
         var obj1 = document.createElement('base');
         obj1.innerHTML = user.name;
         div1.appendChild(obj1);
-        getNewsList(workingFunc.getMassFunc());
-        getCommonNewsList();
+        console.log("changeUserName finished");
     }
 
     function showAuthors() {
-
+        console.log("showAuthors called");
         function showOnWindow(authMass) {
             var div1 = document.querySelector(".scrollMain");
             while (div1.firstElementChild) {
@@ -1081,8 +734,8 @@ function workWithWindow() {
                 var obj1 = document.createElement('div');
                 obj1.className = "newsBlock";
                 var author = authMass[i];
-                obj1.innerHTML = '<author onclick="workVar.getAuthorsArticlesParam(this.innerText)">'+ author + "</author> ";
-                console.log(author+" dobavlyau avtora");
+                obj1.innerHTML = '<author onclick="workVar.getAuthorsArticlesParam(this.innerText)">' + author + "</author> ";
+                console.log(author + " dobavlyau avtora");
                 obj1.innerHTML = obj1.innerHTML + "<br>";
                 console.log(obj1.innerText);
                 div1.appendChild(obj1);
@@ -1090,87 +743,174 @@ function workWithWindow() {
                 probel.innerHTML = "<br>" + " ";
                 div1.appendChild(probel);
             }
-        }
 
-        var authorMass = workingFunc.getAuthors();
-        console.log(authorMass.length+" eto kolichestvo avtorov");
-        showOnWindow(authorMass);
+        }
+        var oReq = new XMLHttpRequest();
+        oReq.addEventListener('load', function () {
+            var info = JSON.parse(this.responseText);
+            showOnWindow(info);
+            console.log("showAuthors finished");
+        });
+        oReq.open('get', '/authors');
+        oReq.send();
     }
 
     function getNewsListWithTag(Ntag) {
         console.log("getNewsListWithTag called");
-        var Nfilter = {tag: Ntag};
-        var tempLen = workingFunc.getMassFunc().length;
-        console.log(tempLen + " =tempLen");
-        var filteredArr = workingFunc.getFilteredMassFunc(0, tempLen, Ntag);
-        //console.log(filteredArr[0].title+"element massiva");
-        getNewsList(filteredArr);
-        getCommonNewsList();
-    }
-    function visibilityFunc()
-    {
-        console.log("getVisibilityFunc"+"<br>");
-        var obj = this;
-        if(userName.type=="guest")
-        {
-            // this.style.display="none";
-            return "none" ;
+        var oReq = new XMLHttpRequest();
+        console.log("oReq created");
+        function cleanUp() {
+            oReq.removeEventListener('load', handler);
         }
-        if(userName.type=="redactor")
-        {
-            //this.style.display="block";
+        function handler() {
+            function addZero(i) {
+                if (i < 10) {
+                    i = "0" + i;
+                }
+                return i;
+            }
+            var div1 = document.getElementById("main");
+            console.log("getNewsListWithTag in progress");
+            while (div1.firstElementChild) {
+                div1.removeChild(div1.firstChild);
+            }
+            var text = JSON.parse(this.responseText);
+            console.log(text);
+            var tempLen = text.length;
+            var filteredArr = workingFunc.getFilteredMassFunc(text, 0, tempLen, Ntag);
+            getNewsList(filteredArr);
+            cleanUp();
+        }
+        oReq.addEventListener('load', handler);
+        console.log("Event listener added");
+        oReq.open('GET', '/array');
+        console.log("Try to GET /array");
+        oReq.send();
+        var Nfilter = {tag: Ntag};
+        console.log("getNewsListWithTag finished");
+    }
+
+    function visibilityFunc() {
+        console.log("getVisibilityFunc" + "<br>");
+        var obj = this;
+
+        if (userName.type == "guest") {
+            console.log("getVisibilityFunc finished");
+            return "none";
+        }
+        if (userName.type == "redactor") {
+            console.log("getVisibilityFunc finished");
             return "block";
         }
+        console.log("getVisibilityFunc finished");
         return undefined;
     }
-    function getAuthorsArticles()
-    {
-        console.log("getAuthorsArticles called");
-        var tempLen = workingFunc.getMassFunc().length;
-        console.log(this.innerText);
-        var filteredArr = workingFunc.getFilteredMassFunc(0, tempLen, {author:this.innerText});
-        getNewsList(filteredArr);
-        getCommonNewsList();
+
+    function getAuthorsArticles() {
+        console.log("getAuthorsArticles called!!!!!!!!!!!!!!!!!!!!!");
+        var oReq = new XMLHttpRequest();
+        console.log("oReq created");
+        function cleanUp() {
+            oReq.removeEventListener('load', handler);
+        }
+        function handler() {
+            function addZero(i) {
+                if (i < 10) {
+                    i = "0" + i;
+                }
+                return i;
+            }
+            var div1 = document.getElementById("main");
+            console.log("handler in getAuthorsArticles");
+            while (div1.firstElementChild) {
+                div1.removeChild(div1.firstChild);
+            }
+            var text = JSON.parse(this.responseText);
+            cleanUp();
+            console.log("text:");
+            console.log(text);
+            var tempLen = text.length;
+            var filteredArr = workingFunc.getFilteredMassFunc(text, 0, tempLen, authorVar);
+            console.log("filtered:");
+            console.log(filteredArr);
+            getNewsList(filteredArr);
+            console.log("getAuthorsArticles: work in getNewsList finished");
+        }
+        var authorVar = {author: this.innerText};
+        console.log("authorVar =");
+        console.log(authorVar);
+        if (authorVar.author) {
+            oReq.addEventListener('load', handler);
+            console.log("Event listener added");
+            oReq.open('GET', '/array');
+            console.log("Try to GET /array");
+            oReq.send();
+        }
+        console.log("getAuthorsArticles finished");
     }
-    function getAuthorsArticlesParam(author)
-    {
+
+    function getAuthorsArticlesParam(author) {
         console.log("getAuthorsArticlesParam called");
-        var tempLen = workingFunc.getMassFunc().length;
-        console.log(author);
-        var filteredArr = workingFunc.getFilteredMassFunc(0, tempLen, {author:author});
-        getNewsList(filteredArr);
-        getCommonNewsList();
+        var oReq = new XMLHttpRequest();
+        oReq.addEventListener('load', function () {
+            var info = JSON.parse(this.responseText);
+            var tempLen = info.length;
+            console.log(author);
+            console.log(info);
+            console.log("Вызываю создание массива новостей " +
+                "этого автора");
+            var filteredArr = workingFunc.getFilteredMassFunc(info, 0, tempLen, {author: author});
+            console.log("Массив получен:");
+            console.log(filteredArr);
+            console.log("Вывожу");
+            getNewsList(filteredArr);
+            console.log("getAuthorsArticlesParam finished");
+        });
+        var text = '/array';
+        console.log(text);
+        oReq.open('get', text);
+        oReq.send();
     }
-    function loginClicked()
-    {
-        function loginButtonClicked()
-        {
-            var users = workingFunc.userMass();
-            var length = users.length;
+
+    function loginClicked() {
+        console.log("loginClicked called");
+        function loginButtonClicked() {
             var loginTextPole = document.getElementById('l_b_id');
             var pTextPole = document.getElementById("p_b_id");
             var tempUserName = loginTextPole.value;
             var tempUserParol = pTextPole.value;
-            console.log(tempUserName+" "+tempUserParol);
-            for(var i = 0 ;i< length ; i++)
-            {
-                console.log(tempUserName + " & " + users[i].name);
-                if(tempUserName==users[i].name)
-                {
-                    console.log(tempUserParol+" & "+users[i].parol)
-                    if(tempUserParol==users[i].parol)
-                    {
-                        console.log("good");
-                        workVar.userChange({name:tempUserName,type:"redactor"});
-                        workVar.newsList();
-                        alert("good");
-                        return true;
+            var user = {'name': tempUserName, 'parol': tempUserParol};
+            var text;
+            var oReq = new XMLHttpRequest();
+            console.log("oReq created");
+            function cleanUp() {
+                oReq.removeEventListener('load', handler);
+            }
+            function handler() {
+                text = JSON.parse(this.responseText);
+                console.log(text);
+                for (var i = 0; i < text.length; i++) {
+                    if (user.name == text[i].name) {
+                        if (user.parol == text[i].parol) {
+                            workVar.userChange({name: tempUserName, type: "redactor"});
+                            alert("good");
+                            workVar.newsList();
+                            cleanUp();
+                            return;
+                        }
                     }
+                    else {
+                        alert("bad");
+                    }
+                    workVar.newsList();
+                    cleanUp();
                 }
             }
-            workVar.newsList();
-            alert("bad");
-            return false;
+            oReq.addEventListener('load', handler);
+            console.log("Event listener added");
+            oReq.open('GET', '/user');
+            console.log("Try to GET user");
+            oReq.send();
         }
         alert(" name:Lev,parol:lkoelk");
         var getMainNewsScroll = document.querySelector(".scrollMain");
@@ -1203,32 +943,31 @@ function workWithWindow() {
         getMainNewsScroll.appendChild(getNextLine);
         var loginButton = document.createElement('button');
         loginButton.innerHTML = "<text> Get in </text>";
-        loginButton.addEventListener('click',loginButtonClicked);
+        loginButton.addEventListener('click', loginButtonClicked);
         getMainNewsScroll.appendChild(loginButton);
 
-
-        var registerButton=document.createElement('button');
+        var registerButton = document.createElement('button');
         registerButton.innerHTML = "<text> Registration </text>";
         getMainNewsScroll.appendChild(registerButton);
+        console.log("loginClicked finished");
     }
 
-	/*это также работает по кнопкам над главной лентой новостей*/
+    /*это также работает по кнопкам над главной лентой новостей*/
     return {
-        newsList:getNewsList,
-        commonNewsList:getCommonNewsList,
-        createNews:createNewNews,
-        add:addNewNews,
-        deleteNews:deleteNews,
-        change:changeNews,
-        editNews:rebildNews,
-        userChange:changeUserName,
-        authors:showAuthors,
-        tagNews:getNewsListWithTag,
-        visibility:visibilityFunc,
-        authorsArticle:getAuthorsArticles,
-        getAuthorsArticlesParam:getAuthorsArticlesParam,
-        loginClickFunc:loginClicked,
-        getFullNews:showFullNews,
-        reload:reload
+        newsList: getNewsList,
+        commonNewsList: getCommonNewsList,
+        createNews: createNewNews,
+        add: addNewNews,
+        deleteNews: deleteNews,
+        change: changeNews,
+        editNews: rebildNews,
+        userChange: changeUserName,
+        authors: showAuthors,
+        tagNews: getNewsListWithTag,
+        visibility: visibilityFunc,
+        authorsArticle: getAuthorsArticles,
+        getAuthorsArticlesParam: getAuthorsArticlesParam,
+        loginClickFunc: loginClicked,
+        getFullNews: showFullNews,
     };
 }

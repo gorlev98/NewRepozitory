@@ -19,11 +19,6 @@ app.use(bodyParser.json());
 // we need it to parse content-type application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
-app.get('/', function (req, res) {
-
-
-});
 var arr = [
     {
         id: '1',
@@ -164,22 +159,9 @@ var userMass =[
     }
 ]
 app.get('/array',function (req,res){//массив новостей
-    //res.json(arr);
     res.send(arr);
 })
-/*app.get('/array/:tag',function (req,res){
-    var mass = new Array();
-   /* for(var i=0;i<arr.length;i++ )
-    {
-        //if(i%2==0)//arr[i].tag.indexOf(req.param.tag)>=0
-        //{
-            mass.push(arr[i].tag.indexOf(req.params.tag));
-        //}
-    }*/
-   // mass.push(req.params.tag);
-   // res.send(req.params.tag);
-    //res.send({"aaaaaa":"aaa"});
-//})
+
 app.get('/array/:id',function (req,res){//новость по id
 
     for(var i =0;i<arr.length;i++)
@@ -187,11 +169,12 @@ app.get('/array/:id',function (req,res){//новость по id
         if(arr[i].id==req.params.id)
         {
             res.send(arr[i]);
+            i=arr.length+1;
         }
     }
 })
+
 app.get('/user',function (req,res){//массив пользователей
-    console.log("/user called");
     res.send(userMass);
 })
 app.get('/authors',function (req,res){//массив авторов
@@ -219,6 +202,7 @@ app.get('/authors',function (req,res){//массив авторов
     }
     res.send(authorsMass);
 })
+
 app.get('/authorArticles/:author',function (req,res){//авторские творения
     var artMass = new Array();
     for(var i =0;i<arr.length;i++)
@@ -226,12 +210,11 @@ app.get('/authorArticles/:author',function (req,res){//авторские тво
         if(arr[i].author==req.params.author)
         {
             artMass.push(arr[i]);
+            i = arr.length+1;
         }
     }
     res.send(artMass);
 })
-app.listen(3000, function () {
-
 app.post('/array', function (req,res){//добавить новость
     var article = {
         id: Date.now(),
@@ -246,18 +229,17 @@ app.post('/array', function (req,res){//добавить новость
     console.log(req.body);
     res.send(article);
 })
+app.listen(3000, function () {
 
-app.put('/array/:id', function(req,res){//изменить новость по id
-    var article = arr.find(function (article){
-        return article.id == Number(req.params.id)
-    });
-    article.title = req.body.title;
-    article.summary = req.body.summary;
-    article.content = req.body.content;
+app.put('/array', function(req,res){//изменить новость по id
+    arr[req.body.number].title = req.body.title;
+    arr[req.body.number].summary = req.body.summary;
+    arr[req.body.number].content = req.body.content;
     res.sendStatus(200);
 })
 
-app.delete('/array/:id',function (req,res){//удалить новость по id
+app.delete('/delete/:id',function (req,res){//удалить новость по id
+
     arr = arr.filter(function (article){
         return article.id != Number(req.params.id);
     })//вернёт массив элем., без удаляемого id-шника
@@ -274,6 +256,5 @@ app.post('/user', function(req,res){//добавить пользователя
 })
 
 console.log('Example app listening on port 3000!')
-
 
 });

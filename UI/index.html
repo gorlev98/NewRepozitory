@@ -16,7 +16,7 @@
 	<div class="loginHyperlink" onclick="workVar.loginClickFunc()"><i>Логин / Регистрация</i></div>
 </div>
 
-<div class="scrollMain">
+<div class="scrollMain" id="main">
 </div>
 <div class="scrollAll">
 
@@ -42,9 +42,11 @@
 </div>
 </body>
 <script>
+
     var workVar = workWithWindow();
+    console.log("workVar.newsList on html called");
     workVar.newsList();
-    workVar.commonNewsList();
+	console.log("workVar.userChange on html called");
     workVar.userChange(userName);
 
 </script>
