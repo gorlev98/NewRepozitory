@@ -1,6 +1,7 @@
+node_modules/
 *.iml
 *.ini
 .DS_Store/
 .idea/
 out/
-/Task0/nbproject/private/
+/Task0/nbproject/private/ 

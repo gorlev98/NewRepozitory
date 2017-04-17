@@ -27,29 +27,33 @@ function lock() {
     }
 
    function getArticle(look_id) {
-        console.log('getArticle function called, id of object:' + look_id + '<br>');
-        var oReq = new XMLHttpRequest();
-        var get = oReq.addEventListener('load', function () {
-            var info = JSON.parse(this.responseText);
-            return info;
+       console.log('getArticle function called, id of object:' + look_id + '<br>');
+       var getArticlePromise = new Promise((resolve, reject) => {
+           var oReq = new XMLHttpRequest();
+           var get = oReq.addEventListener('load', function () {
+               var info = JSON.parse(this.responseText);
+               return info;
+           });
+           var text = '/user/' + look_id;
+           console.log(text);
+           oReq.open('get', text);
+           oReq.send();
+           console.log(get);
         });
-        var text = '/user/' + look_id;
-        console.log(text);
-        oReq.open('get', text);
-        oReq.send();
-        console.log(get);
-    }
+   }
 
     function removeArticle(arId) {
-        var oReq = new XMLHttpRequest();
-        oReq.addEventListener('load', function () {
-            workVar.newsList();
-            console.log("Delete news finished");
+        var remArticlePromise = new Promise((resolve, reject) => {
+            var oReq = new XMLHttpRequest();
+            oReq.addEventListener('load', function () {
+                workVar.newsList();
+                console.log("Delete news finished");
+            });
+            var text = '/delete/' + arId;
+            console.log(text);
+            oReq.open('DELETE', text);
+            oReq.send();
         });
-        var text = '/delete/' + arId;
-        console.log(text);
-        oReq.open('DELETE', text);
-        oReq.send();
     }
 
     function getFilteredArticles(mass, skip, number, filter) {
@@ -115,9 +119,9 @@ function lock() {
         }
         return undefined;
     }
-
+/*
     function getAuthorMass() {
-        function lookInAuthors(newAuthor) {
+       function lookInAuthors(newAuthor) {
             for (var i = 0; i < authorsMass.length; i++) {
                 if (authorsMass[i] == newAuthor) {
                     return false;
@@ -146,7 +150,7 @@ function lock() {
         oReq.send();
         console.log(get);
         return authorsMass;
-    }
+    }*/
     function validateArticle(article) {
         function validate_date(value) {
             try {
@@ -244,7 +248,6 @@ function lock() {
         removeFunc: removeArticle,
         getFilteredMassFunc: getFilteredArticles,
         sortMass: funcSortMass,
-        getAuthors: getAuthorMass,
         getArticle: getArticle,
         tagMass: getTagMass,
         validateArticle: validateArticle
@@ -272,9 +275,10 @@ function workWithWindow() {
         var array = G_array;
         var visible = workVar.visibility();
         if (array == undefined) {
+
             console.log("array==undefined");
+            var getArrayPromise = new Promise((resolve,reject)=> {
             var oReq = new XMLHttpRequest();
-            console.log("oReq created");
             function cleanUp() {
                 oReq.removeEventListener('load', handler);
             }
@@ -285,6 +289,7 @@ function workWithWindow() {
                     }
                     return i;
                 }
+
                 var div1 = document.getElementById("main");
                 console.log("Hello, I'm here");
                 while (div1.firstElementChild) {
@@ -297,11 +302,13 @@ function workWithWindow() {
                 getCommonNewsListInsideFunc(text);
                 console.log("getNewsList finished");
             }
-            oReq.addEventListener('load', handler);
-            console.log("Event listener added");
-            oReq.open('GET', '/array');
-            console.log("Try to GET /array");
-            oReq.send();
+                console.log("oReq created");
+                oReq.addEventListener('load', handler);
+                console.log("Event listener added");
+                oReq.open('GET', '/array');
+                console.log("Try to GET /array");
+                oReq.send();
+            });
         }
         else {
             console.log("Передан ненулевой параметр");
@@ -381,99 +388,109 @@ function workWithWindow() {
             }
             return i;
         }
-        var oReq = new XMLHttpRequest();
-        console.log("oReq created");
-        function cleanUp() {
-            oReq.removeEventListener('load', handler);
-        }
 
-        function handler() {
-            function addZero(i) {
-                if (i < 10) {
-                    i = "0" + i;
-                }
-                return i;
+        var fullNewsPromise = new Promise((resolve, reject) => {
+            var oReq = new XMLHttpRequest();
+            console.log("oReq created");
+            function cleanUp() {
+                oReq.removeEventListener('load', handler);
             }
-            var div1 = document.getElementById("main");
-            console.log("Hello, I'm here");
-            while (div1.firstElementChild) {
-                div1.removeChild(div1.firstChild);
-            }
-            var text = JSON.parse(this.responseText);
-            console.log(text);
-            var div1 = document.querySelector(".scrollMain");
-            while (div1.firstElementChild) {
-                div1.removeChild(div1.firstChild);
-            }
-            var id = -1;
-            for (var i = 0; i < text.length; i++) {
-                if (text[i].title == title) {
-                    id = i;
-                }
-            }
-            var obj = document.createElement('div');
-            obj.className = "fullNewsBlock";
-            console.log("id=" + id);
 
-            if (id != -1) {
-                var Ctime = new Date(text[id].createdAt);
-                var time = addZero(Ctime.getUTCDate()).toString() + " "
-                    + addZero(Ctime.getUTCMonth() + 1).toString()
-                    + "    " + Ctime.getHours() + ":" +
-                    addZero(Ctime.getMinutes());
-                var splitted_tags = (text[id].tag.toString()).split(/ /);
-                var newsName = text[id].title;
-                var author = text[id].author;
-                obj.innerHTML = time + ' ' + "<news>" + newsName + "</news>" + "<br>" + "<justText>" + text[id].summary + "</justText>" +
-                    "<br><br>" + "<justText>" + text[id].content + "</justText>" + "<br><br>" +
-                    "Источник:" + "<a>___</a>" + '<author onclick="workVar.getAuthorsArticlesParam(this.innerText)">' + author + "</author> " + "<a>___</a>" +
-                    "Теги:" + "<a>__</a>";
-                for (var j = 0; j < splitted_tags.length; j++) {
-                    obj.innerHTML = obj.innerHTML + '<tag  onclick="workVar.tagNews({tag:this.innerText})">' + splitted_tags[j] + "<a>__</a>" + "</tag>";
+            function handler() {
+                function addZero(i) {
+                    if (i < 10) {
+                        i = "0" + i;
+                    }
+                    return i;
                 }
-                div1.appendChild(obj);
+
+                var div1 = document.getElementById("main");
+                console.log("Hello, I'm here");
+                while (div1.firstElementChild) {
+                    div1.removeChild(div1.firstChild);
+                }
+                var text = JSON.parse(this.responseText);
+                console.log(text);
+                var div1 = document.querySelector(".scrollMain");
+                while (div1.firstElementChild) {
+                    div1.removeChild(div1.firstChild);
+                }
+                var id = -1;
+                for (var i = 0; i < text.length; i++) {
+                    if (text[i].title == title) {
+                        id = i;
+                    }
+                }
+                var obj = document.createElement('div');
+                obj.className = "fullNewsBlock";
+                console.log("id=" + id);
+
+                if (id != -1) {
+                    var Ctime = new Date(text[id].createdAt);
+                    var time = addZero(Ctime.getUTCDate()).toString() + " "
+                        + addZero(Ctime.getUTCMonth() + 1).toString()
+                        + "    " + Ctime.getHours() + ":" +
+                        addZero(Ctime.getMinutes());
+                    var splitted_tags = (text[id].tag.toString()).split(/ /);
+                    var newsName = text[id].title;
+                    var author = text[id].author;
+                    obj.innerHTML = time + ' ' + "<news>" + newsName + "</news>" + "<br>" + "<justText>" + text[id].summary + "</justText>" +
+                        "<br><br>" + "<justText>" + text[id].content + "</justText>" + "<br><br>" +
+                        "Источник:" + "<a>___</a>" + '<author onclick="workVar.getAuthorsArticlesParam(this.innerText)">' + author + "</author> " + "<a>___</a>" +
+                        "Теги:" + "<a>__</a>";
+                    for (var j = 0; j < splitted_tags.length; j++) {
+                        obj.innerHTML = obj.innerHTML + '<tag  onclick="workVar.tagNews({tag:this.innerText})">' + splitted_tags[j] + "<a>__</a>" + "</tag>";
+                    }
+                    div1.appendChild(obj);
+                }
+                cleanUp();
             }
-            cleanUp();
-        }
-        oReq.addEventListener('load', handler);
-        console.log("Event listener added");
-        oReq.open('GET', '/array');
-        console.log("Try to GET /array");
-        oReq.send();
-        console.log("showFullNews finished");
+
+            oReq.addEventListener('load', handler);
+            console.log("Event listener added");
+            oReq.open('GET', '/array');
+            console.log("Try to GET /array");
+            oReq.send();
+            console.log("showFullNews finished");
+        });
     }
 
     function getCommonNewsList() {
         console.log("getCommonNewsList called");
         var text;
-        var oReq = new XMLHttpRequest();
-        console.log("oReq created");
-        function cleanUp() {
-            oReq.removeEventListener('load', handler);
-        }
-        function handler() {
-            function addZero(i) {
-                if (i < 10) {
-                    i = "0" + i;
+        var commonNLPromise = new Promise((resolve, reject) => {
+            var oReq = new XMLHttpRequest();
+            console.log("oReq created");
+            function cleanUp() {
+                oReq.removeEventListener('load', handler);
+            }
+
+            function handler() {
+                function addZero(i) {
+                    if (i < 10) {
+                        i = "0" + i;
+                    }
+                    return i;
                 }
-                return i;
+
+                var div1 = document.getElementById("main");
+                console.log("Hello, I'm here");
+                while (div1.firstElementChild) {
+                    div1.removeChild(div1.firstChild);
+                }
+                text = JSON.parse(this.responseText);
+                console.log(text);
+                getCommonNewsListInsideFunc(text);
+                cleanUp();
             }
-            var div1 = document.getElementById("main");
-            console.log("Hello, I'm here");
-            while (div1.firstElementChild) {
-                div1.removeChild(div1.firstChild);
-            }
-            text = JSON.parse(this.responseText);
-            console.log(text);
-            getCommonNewsListInsideFunc(text);
-            cleanUp();
-        }
-        oReq.addEventListener('load', handler);
-        console.log("Event listener added");
-        oReq.open('GET', '/array');
-        console.log("Try to GET /array");
-        oReq.send();
-        console.log("getCommonNewsList finished");
+
+            oReq.addEventListener('load', handler);
+            console.log("Event listener added");
+            oReq.open('GET', '/array');
+            console.log("Try to GET /array");
+            oReq.send();
+            console.log("getCommonNewsList finished");
+        });
     }
 
     function getCommonNewsListInsideFunc(array) {
@@ -506,20 +523,22 @@ function workWithWindow() {
         console.log("change news called");
         var splitter = id.split(/[<>]/);
         console.log(splitter[2] + "|<br>");
-        var oReq = new XMLHttpRequest();
-        oReq.addEventListener('load', function () {
-            var info = JSON.parse(this.responseText);//массив новостей
-            console.log(info);
-            for (var i = 0; i < info.length; i++) {
-                console.log(info[i].id + " , i=" + i);
-                if (info[i].id == splitter[2]) {
-                    changeNewsInsideFunc(info[i], i);
-                    i = info.length + 1;
+        var changePromise = new Promise((resolve, reject) => {
+            var oReq = new XMLHttpRequest();
+            oReq.addEventListener('load', function () {
+                var info = JSON.parse(this.responseText);//массив новостей
+                console.log(info);
+                for (var i = 0; i < info.length; i++) {
+                    console.log(info[i].id + " , i=" + i);
+                    if (info[i].id == splitter[2]) {
+                        changeNewsInsideFunc(info[i], i);
+                        i = info.length + 1;
+                    }
                 }
-            }
+            });
+            oReq.open('get', '/array');
+            oReq.send();
         });
-        oReq.open('get', '/array');
-        oReq.send();
     }
 
     function changeNewsInsideFunc(article, number) {
@@ -537,21 +556,23 @@ function workWithWindow() {
             var summary = summaryTextPole.value;
             var content = contentTextPole.value;
             console.log("aaaa  " + title + " " + summary + " " + content);
-            var oReq = new XMLHttpRequest();
-            oReq.addEventListener('load', function () {
-                console.log("I'm in");
-                getNewsList();
+            var changePromise = new Promise((resolve,reject)=> {
+                var oReq = new XMLHttpRequest();
+                oReq.addEventListener('load', function () {
+                    console.log("I'm in");
+                    getNewsList();
+                });
+                oReq.open('put', '/array');
+                oReq.setRequestHeader('content-type', 'application/json');
+                const body = JSON.stringify({
+                    number: number,
+                    title: title,
+                    summary: summary,
+                    content: content
+                });
+                console.log(body);
+                oReq.send(body);
             });
-            oReq.open('put', '/array');
-            oReq.setRequestHeader('content-type', 'application/json');
-            const body = JSON.stringify({
-                number: number,
-                title: title,
-                summary: summary,
-                content: content
-            });
-            console.log(body);
-            oReq.send(body);
         }
         var div1 = document.querySelector(".scrollMain");
         while (div1.firstElementChild) {
@@ -685,15 +706,18 @@ function workWithWindow() {
             tag: tag1
         };
         if (workingFunc.validateArticle(article)) {
-           const body = JSON.stringify(article);
-            var oReq = new XMLHttpRequest();
-            oReq.addEventListener('load', function () {
-                getNewsList();
-                console.log("AddNewNews func finished");
+
+           var addPromise = new Promise((resolve,reject)=> {
+               const body = JSON.stringify(article);
+               var oReq = new XMLHttpRequest();
+                oReq.addEventListener('load', function () {
+                    getNewsList();
+                    console.log("AddNewNews func finished");
+                });
+                oReq.open('post', '/array');
+                oReq.setRequestHeader('content-type', 'application/json');
+                oReq.send(body);
             });
-            oReq.open('post', '/array');
-            oReq.setRequestHeader('content-type', 'application/json');
-            oReq.send(body);
         }
         else{
             getNewsList();
@@ -745,49 +769,56 @@ function workWithWindow() {
             }
 
         }
-        var oReq = new XMLHttpRequest();
-        oReq.addEventListener('load', function () {
-            var info = JSON.parse(this.responseText);
-            showOnWindow(info);
-            console.log("showAuthors finished");
+        var showAPromise = new Promise((resolve,reject)=> {
+            var oReq = new XMLHttpRequest();
+            oReq.addEventListener('load', function () {
+                var info = JSON.parse(this.responseText);
+                showOnWindow(info);
+                console.log("showAuthors finished");
+            });
+            oReq.open('get', '/authors');
+            oReq.send();
         });
-        oReq.open('get', '/authors');
-        oReq.send();
     }
 
     function getNewsListWithTag(Ntag) {
         console.log("getNewsListWithTag called");
-        var oReq = new XMLHttpRequest();
-        console.log("oReq created");
-        function cleanUp() {
-            oReq.removeEventListener('load', handler);
-        }
-        function handler() {
-            function addZero(i) {
-                if (i < 10) {
-                    i = "0" + i;
+        var tagNewsPromise = new Promise((resolve,reject)=> {
+            var oReq = new XMLHttpRequest();
+            console.log("oReq created");
+            function cleanUp() {
+                oReq.removeEventListener('load', handler);
+            }
+
+            function handler() {
+                function addZero(i) {
+                    if (i < 10) {
+                        i = "0" + i;
+                    }
+                    return i;
                 }
-                return i;
+
+                var div1 = document.getElementById("main");
+                console.log("getNewsListWithTag in progress");
+                while (div1.firstElementChild) {
+                    div1.removeChild(div1.firstChild);
+                }
+                var text = JSON.parse(this.responseText);
+                console.log(text);
+                var tempLen = text.length;
+                var filteredArr = workingFunc.getFilteredMassFunc(text, 0, tempLen, Ntag);
+                getNewsList(filteredArr);
+                cleanUp();
             }
-            var div1 = document.getElementById("main");
-            console.log("getNewsListWithTag in progress");
-            while (div1.firstElementChild) {
-                div1.removeChild(div1.firstChild);
-            }
-            var text = JSON.parse(this.responseText);
-            console.log(text);
-            var tempLen = text.length;
-            var filteredArr = workingFunc.getFilteredMassFunc(text, 0, tempLen, Ntag);
-            getNewsList(filteredArr);
-            cleanUp();
-        }
-        oReq.addEventListener('load', handler);
-        console.log("Event listener added");
-        oReq.open('GET', '/array');
-        console.log("Try to GET /array");
-        oReq.send();
-        var Nfilter = {tag: Ntag};
-        console.log("getNewsListWithTag finished");
+
+            oReq.addEventListener('load', handler);
+            console.log("Event listener added");
+            oReq.open('GET', '/array');
+            console.log("Try to GET /array");
+            oReq.send();
+            var Nfilter = {tag: Ntag};
+            console.log("getNewsListWithTag finished");
+        });
     }
 
     function visibilityFunc() {
@@ -808,68 +839,75 @@ function workWithWindow() {
 
     function getAuthorsArticles() {
         console.log("getAuthorsArticles called!!!!!!!!!!!!!!!!!!!!!");
-        var oReq = new XMLHttpRequest();
-        console.log("oReq created");
-        function cleanUp() {
-            oReq.removeEventListener('load', handler);
-        }
-        function handler() {
-            function addZero(i) {
-                if (i < 10) {
-                    i = "0" + i;
+        var AAPromise = new Promise((resolve,reject)=> {
+            var oReq = new XMLHttpRequest();
+            console.log("oReq created");
+            function cleanUp() {
+                oReq.removeEventListener('load', handler);
+            }
+
+            function handler() {
+                function addZero(i) {
+                    if (i < 10) {
+                        i = "0" + i;
+                    }
+                    return i;
                 }
-                return i;
+
+                var div1 = document.getElementById("main");
+                console.log("handler in getAuthorsArticles");
+                while (div1.firstElementChild) {
+                    div1.removeChild(div1.firstChild);
+                }
+                var text = JSON.parse(this.responseText);
+                cleanUp();
+                console.log("text:");
+                console.log(text);
+                var tempLen = text.length;
+                var filteredArr = workingFunc.getFilteredMassFunc(text, 0, tempLen, authorVar);
+                console.log("filtered:");
+                console.log(filteredArr);
+                getNewsList(filteredArr);
+                console.log("getAuthorsArticles: work in getNewsList finished");
             }
-            var div1 = document.getElementById("main");
-            console.log("handler in getAuthorsArticles");
-            while (div1.firstElementChild) {
-                div1.removeChild(div1.firstChild);
+
+            var authorVar = {author: this.innerText};
+            console.log("authorVar =");
+            console.log(authorVar);
+            if (authorVar.author) {
+                oReq.addEventListener('load', handler);
+                console.log("Event listener added");
+                oReq.open('GET', '/array');
+                console.log("Try to GET /array");
+                oReq.send();
             }
-            var text = JSON.parse(this.responseText);
-            cleanUp();
-            console.log("text:");
-            console.log(text);
-            var tempLen = text.length;
-            var filteredArr = workingFunc.getFilteredMassFunc(text, 0, tempLen, authorVar);
-            console.log("filtered:");
-            console.log(filteredArr);
-            getNewsList(filteredArr);
-            console.log("getAuthorsArticles: work in getNewsList finished");
-        }
-        var authorVar = {author: this.innerText};
-        console.log("authorVar =");
-        console.log(authorVar);
-        if (authorVar.author) {
-            oReq.addEventListener('load', handler);
-            console.log("Event listener added");
-            oReq.open('GET', '/array');
-            console.log("Try to GET /array");
-            oReq.send();
-        }
-        console.log("getAuthorsArticles finished");
+            console.log("getAuthorsArticles finished");
+        });
     }
 
     function getAuthorsArticlesParam(author) {
         console.log("getAuthorsArticlesParam called");
-        var oReq = new XMLHttpRequest();
-        oReq.addEventListener('load', function () {
-            var info = JSON.parse(this.responseText);
-            var tempLen = info.length;
-            console.log(author);
-            console.log(info);
-            console.log("Вызываю создание массива новостей " +
-                "этого автора");
-            var filteredArr = workingFunc.getFilteredMassFunc(info, 0, tempLen, {author: author});
-            console.log("Массив получен:");
-            console.log(filteredArr);
-            console.log("Вывожу");
-            getNewsList(filteredArr);
-            console.log("getAuthorsArticlesParam finished");
+        var AAPPromise = new Promise((resolve,reject)=> {
+            var oReq = new XMLHttpRequest();
+            oReq.addEventListener('load', function () {
+                var info = JSON.parse(this.responseText);
+                var tempLen = info.length;
+                console.log(author);
+                console.log(info);
+                console.log("Вызываю создание массива новостей " +
+                    "этого автора");
+                var filteredArr = workingFunc.getFilteredMassFunc(info, 0, tempLen, {author: author});
+                console.log("Массив получен:");
+                console.log(filteredArr);
+                console.log("Вывожу");
+                getNewsList(filteredArr);
+                console.log("getAuthorsArticlesParam finished");
+            });
+            var text = '/array';
+            console.log(text);
+            oReq.open('get', text);
+            oReq.send();
         });
-        var text = '/array';
-        console.log(text);
-        oReq.open('get', text);
-        oReq.send();
     }
 
     function loginClicked() {
@@ -881,36 +919,40 @@ function workWithWindow() {
             var tempUserParol = pTextPole.value;
             var user = {'name': tempUserName, 'parol': tempUserParol};
             var text;
-            var oReq = new XMLHttpRequest();
-            console.log("oReq created");
-            function cleanUp() {
-                oReq.removeEventListener('load', handler);
-            }
-            function handler() {
-                text = JSON.parse(this.responseText);
-                console.log(text);
-                for (var i = 0; i < text.length; i++) {
-                    if (user.name == text[i].name) {
-                        if (user.parol == text[i].parol) {
-                            workVar.userChange({name: tempUserName, type: "redactor"});
-                            alert("good");
-                            workVar.newsList();
-                            cleanUp();
-                            return;
-                        }
-                    }
-                    else {
-                        alert("bad");
-                    }
-                    workVar.newsList();
-                    cleanUp();
+            var loginPromise = new Promise((resolve,reject)=> {
+                var oReq = new XMLHttpRequest();
+                console.log("oReq created");
+                function cleanUp() {
+                    oReq.removeEventListener('load', handler);
                 }
-            }
-            oReq.addEventListener('load', handler);
-            console.log("Event listener added");
-            oReq.open('GET', '/user');
-            console.log("Try to GET user");
-            oReq.send();
+
+                function handler() {
+                    text = JSON.parse(this.responseText);
+                    console.log(text);
+                    for (var i = 0; i < text.length; i++) {
+                        if (user.name == text[i].name) {
+                            if (user.parol == text[i].parol) {
+                                workVar.userChange({name: tempUserName, type: "redactor"});
+                                alert("good");
+                                workVar.newsList();
+                                cleanUp();
+                                return;
+                            }
+                        }
+                        else {
+                            alert("bad");
+                        }
+                        workVar.newsList();
+                        cleanUp();
+                    }
+                }
+
+                oReq.addEventListener('load', handler);
+                console.log("Event listener added");
+                oReq.open('GET', '/user');
+                console.log("Try to GET user");
+                oReq.send();
+            });
         }
         alert(" name:Lev,parol:lkoelk");
         var getMainNewsScroll = document.querySelector(".scrollMain");
