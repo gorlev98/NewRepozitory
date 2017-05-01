@@ -1,9 +1,33 @@
-﻿var express = require('express');
+﻿/*var express = require('express');
 var bodyParser = require('body-parser');
+*/
+var express = require('express'),
+    bodyParser = require('body-parser'),
+    // ...
+    passport = require('passport'),
+    LocalStrategy = require('passport-local').Strategy;
+
+passport.use( new LocalStrategy(
+    function (username,parol,done) {
+        console.log("LocalStrategy starts");
+        var result={info: false};
+        for(var i=0;i<userMass.length;i++)
+        {
+            if((userMass.name==username)&&(userMass.parol==parol))
+            {
+                result.info=true;
+                return done(null,result);
+            }
+        }
+        return done(null,false,{ message: "DENIED"});
+    }
+))
 
 var app = express();
 
 app.use(bodyParser.json());//парсить json
+
+app.use(passport.initialize());
 
 app.use(bodyParser.urlencoded({ extended: true}));//парсить формы
 
@@ -215,6 +239,25 @@ app.get('/authorArticles/:author',function (req,res){//авторские тво
     }
     res.send(artMass);
 })
+app.post('/login', function (req,res) {
+    var name = req.body.name;
+    var parol = req.body.parol;
+    console.log(name + "  "+parol);
+
+    for(var i =0;i<userMass.length;i++)
+    {
+        if((userMass[i].name==name)&&(userMass[i].parol==parol))
+        {
+            res.json('good');
+            i=userMass.length+5;
+        }
+    }
+    if(i<userMass.length+5)
+    {
+        res.json('bad');
+    }
+})
+
 app.post('/array', function (req,res){//добавить новость
     var article = {
         id: Date.now(),
@@ -229,6 +272,7 @@ app.post('/array', function (req,res){//добавить новость
     console.log(req.body);
     res.send(article);
 })
+
 app.listen(3000, function () {
 
 app.put('/array', function(req,res){//изменить новость по id

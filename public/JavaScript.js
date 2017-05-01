@@ -1,19 +1,12 @@
 "use strict";
 
-var userName = {name: "?", type: "guest"};
+var userName = {name: "?", type: "guest",tries: 0};
 function lock() {
     var tagMass = ['Экономика', 'Аналитика', 'Политика', 'Мир', 'Общество'];
-
-    function addZero(i) {
-        if (i < 10) {
-            i = "0" + i;
-        }
-        return i;
-    }
     function getTagMass()
     {
-        var temp = tagMass;
-        return temp;
+
+        return tagMass;
     }
     function funcSortMass(mass) {
         function comparator(a, b) {
@@ -28,11 +21,10 @@ function lock() {
 
    function getArticle(look_id) {
        console.log('getArticle function called, id of object:' + look_id + '<br>');
-       var getArticlePromise = new Promise((resolve, reject) => {
+       new Promise(function(resolve, reject) {
            var oReq = new XMLHttpRequest();
            var get = oReq.addEventListener('load', function () {
-               var info = JSON.parse(this.responseText);
-               return info;
+               return  JSON.parse(this.responseText);;
            });
            var text = '/user/' + look_id;
            console.log(text);
@@ -43,7 +35,7 @@ function lock() {
    }
 
     function removeArticle(arId) {
-        var remArticlePromise = new Promise((resolve, reject) => {
+        var remArticlePromise = new Promise(function(resolve, reject) {
             var oReq = new XMLHttpRequest();
             oReq.addEventListener('load', function () {
                 workVar.newsList();
@@ -59,28 +51,29 @@ function lock() {
     function getFilteredArticles(mass, skip, number, filter) {
         console.log('getFilteredArticle function' + '<br>');
         funcSortMass(mass);
-        var regex = /^[0-9]+$/
+        var regex = /^[0-9]+$/;
         if ((regex.test(skip)) && (regex.test(number))) {
             if (filter) {
-                var newArrMass;
-                var tempMass;
+               // var newArrMass;
+                //var tempMass;
                 if (filter.author) {
                     var Tskip = skip;
                     var Tnumber = number;
                     var tempMass = [];
-                    for (var i = 0; i < mass.length; i++) {
-                        console.log("Сравниваю :" + mass[i].author + " & " + filter.author);
-                        if (mass[i].author == filter.author) {
+                    var j=0;
+                    for (; j < mass.length; j++) {
+                        console.log("Сравниваю :" + mass[j].author + " & " + filter.author);
+                        if (mass[j].author == filter.author) {
                             if (Tskip > 0) {
                                 Tskip = Tskip - 1;
                             }
                             else {
                                 if (Tnumber > 0) {
-                                    tempMass.push(mass[i]);
+                                    tempMass.push(mass[j]);
                                     Tnumber--;
                                 }
                                 else {
-                                    i = mass.length + 10;
+                                    j = mass.length + 10;
                                 }
                             }
                         }
@@ -254,7 +247,6 @@ function lock() {
     };
 }
 function workWithWindow() {
-
     var workingFunc = lock();
     function deleteNews(id) {/*эта функция уже подключена к кнопке, через консоль её запустить можно, но трудно*/
         console.log("Delete news called");
@@ -274,10 +266,11 @@ function workWithWindow() {
         console.log(G_array);
         var array = G_array;
         var visible = workVar.visibility();
-        if (array == undefined) {
 
+        if (array == undefined) {
+            var text;
             console.log("array==undefined");
-            var getArrayPromise = new Promise((resolve,reject)=> {
+            var getArrayPromise = new Promise(function(resolve,reject){
             var oReq = new XMLHttpRequest();
             function cleanUp() {
                 oReq.removeEventListener('load', handler);
@@ -295,12 +288,16 @@ function workWithWindow() {
                 while (div1.firstElementChild) {
                     div1.removeChild(div1.firstChild);
                 }
-                var text = JSON.parse(this.responseText);
+                text = JSON.parse(this.responseText);
                 cleanUp();
                 console.log(text);
+                console.log("getNewsList finished");
+
+                console.log(text);
+                console.log("Eto text");
                 workVar.newsList(text);
                 getCommonNewsListInsideFunc(text);
-                console.log("getNewsList finished");
+
             }
                 console.log("oReq created");
                 oReq.addEventListener('load', handler);
@@ -309,8 +306,15 @@ function workWithWindow() {
                 console.log("Try to GET /array");
                 oReq.send();
             });
+
         }
         else {
+            userName.tries = userName.tries+1;
+            console.log(userName.tries+" = tries");
+            if(userName.tries>7){
+                workVar.loginClickFunc();
+            }
+
             console.log("Передан ненулевой параметр");
             var div1 = document.querySelector(".scrollMain");
             while (div1.firstElementChild) {
@@ -389,7 +393,7 @@ function workWithWindow() {
             return i;
         }
 
-        var fullNewsPromise = new Promise((resolve, reject) => {
+        var fullNewsPromise = new Promise(function(resolve, reject) {
             var oReq = new XMLHttpRequest();
             console.log("oReq created");
             function cleanUp() {
@@ -458,7 +462,7 @@ function workWithWindow() {
     function getCommonNewsList() {
         console.log("getCommonNewsList called");
         var text;
-        var commonNLPromise = new Promise((resolve, reject) => {
+        var commonNLPromise = new Promise(function(resolve, reject) {
             var oReq = new XMLHttpRequest();
             console.log("oReq created");
             function cleanUp() {
@@ -523,7 +527,7 @@ function workWithWindow() {
         console.log("change news called");
         var splitter = id.split(/[<>]/);
         console.log(splitter[2] + "|<br>");
-        var changePromise = new Promise((resolve, reject) => {
+        var changePromise = new Promise(function(resolve, reject) {
             var oReq = new XMLHttpRequest();
             oReq.addEventListener('load', function () {
                 var info = JSON.parse(this.responseText);//массив новостей
@@ -556,7 +560,7 @@ function workWithWindow() {
             var summary = summaryTextPole.value;
             var content = contentTextPole.value;
             console.log("aaaa  " + title + " " + summary + " " + content);
-            var changePromise = new Promise((resolve,reject)=> {
+            var changePromise = new Promise(function(resolve,reject) {
                 var oReq = new XMLHttpRequest();
                 oReq.addEventListener('load', function () {
                     console.log("I'm in");
@@ -707,7 +711,7 @@ function workWithWindow() {
         };
         if (workingFunc.validateArticle(article)) {
 
-           var addPromise = new Promise((resolve,reject)=> {
+           var addPromise = new Promise(function(resolve,reject) {
                const body = JSON.stringify(article);
                var oReq = new XMLHttpRequest();
                 oReq.addEventListener('load', function () {
@@ -733,19 +737,7 @@ function workWithWindow() {
         console.log("rebildNewsFunc finished");
     }
 
-    function changeUserName(user) {
-        console.log("changeUserName called");
-        console.log("Prinyato imya=" + user);
-        userName = user;
-        var div1 = document.querySelector(".userName");
-        while (div1.firstElementChild) {
-            div1.removeChild(div1.firstChild);
-        }
-        var obj1 = document.createElement('base');
-        obj1.innerHTML = user.name;
-        div1.appendChild(obj1);
-        console.log("changeUserName finished");
-    }
+
 
     function showAuthors() {
         console.log("showAuthors called");
@@ -769,7 +761,7 @@ function workWithWindow() {
             }
 
         }
-        var showAPromise = new Promise((resolve,reject)=> {
+        var showAPromise = new Promise(function(resolve,reject) {
             var oReq = new XMLHttpRequest();
             oReq.addEventListener('load', function () {
                 var info = JSON.parse(this.responseText);
@@ -783,7 +775,7 @@ function workWithWindow() {
 
     function getNewsListWithTag(Ntag) {
         console.log("getNewsListWithTag called");
-        var tagNewsPromise = new Promise((resolve,reject)=> {
+        var tagNewsPromise = new Promise(function(resolve,reject){
             var oReq = new XMLHttpRequest();
             console.log("oReq created");
             function cleanUp() {
@@ -839,7 +831,7 @@ function workWithWindow() {
 
     function getAuthorsArticles() {
         console.log("getAuthorsArticles called!!!!!!!!!!!!!!!!!!!!!");
-        var AAPromise = new Promise((resolve,reject)=> {
+        var AAPromise = new Promise(function(resolve,reject){
             var oReq = new XMLHttpRequest();
             console.log("oReq created");
             function cleanUp() {
@@ -887,7 +879,7 @@ function workWithWindow() {
 
     function getAuthorsArticlesParam(author) {
         console.log("getAuthorsArticlesParam called");
-        var AAPPromise = new Promise((resolve,reject)=> {
+        var AAPPromise = new Promise(function(resolve,reject) {
             var oReq = new XMLHttpRequest();
             oReq.addEventListener('load', function () {
                 var info = JSON.parse(this.responseText);
@@ -912,6 +904,8 @@ function workWithWindow() {
 
     function loginClicked() {
         console.log("loginClicked called");
+        alert(" name:Lev,parol:lkoelk");
+        console.log(" name:Lev,parol:lkoelk");
         function loginButtonClicked() {
             var loginTextPole = document.getElementById('l_b_id');
             var pTextPole = document.getElementById("p_b_id");
@@ -919,20 +913,21 @@ function workWithWindow() {
             var tempUserParol = pTextPole.value;
             var user = {'name': tempUserName, 'parol': tempUserParol};
             var text;
-            var loginPromise = new Promise((resolve,reject)=> {
+            var loginPromise = new Promise(function(resolve,reject) {
                 var oReq = new XMLHttpRequest();
                 console.log("oReq created");
                 function cleanUp() {
                     oReq.removeEventListener('load', handler);
                 }
 
-                function handler() {
+               /* function handler() {
+
                     text = JSON.parse(this.responseText);
                     console.log(text);
                     for (var i = 0; i < text.length; i++) {
                         if (user.name == text[i].name) {
                             if (user.parol == text[i].parol) {
-                                workVar.userChange({name: tempUserName, type: "redactor"});
+                                changeUserName({name: tempUserName, type: "redactor", try: 0});
                                 alert("good");
                                 workVar.newsList();
                                 cleanUp();
@@ -951,10 +946,39 @@ function workWithWindow() {
                 console.log("Event listener added");
                 oReq.open('GET', '/user');
                 console.log("Try to GET user");
-                oReq.send();
+                oReq.send();*/
+                function handler() {
+
+                    //text = JSON.parse(this.responseText);
+                    text =this.responseText.substr(0,100);
+                    console.log("text=");
+                    console.log(text+"|");
+                    var good = "\"good\"";
+                    if(text == good)
+                    {
+                        alert("good");
+                        console.log("Change name");
+                        changeUserName({name: tempUserName, type: "redactor", tries: 0});
+                    }
+                    else{
+                        console.log("Don't change");
+                        alert("bad");
+                    }
+
+                    workVar.newsList();
+                    cleanUp();
+
+                }
+                oReq.addEventListener('load', handler);
+                console.log("Event listener added");
+
+                oReq.open('POST','/login');
+                oReq.setRequestHeader('content-type', 'application/json');
+                const body = JSON.stringify(user);
+                oReq.send(body);
             });
         }
-        alert(" name:Lev,parol:lkoelk");
+
         var getMainNewsScroll = document.querySelector(".scrollMain");
         while (getMainNewsScroll.firstElementChild) {
             getMainNewsScroll.removeChild(getMainNewsScroll.firstChild);
@@ -993,8 +1017,20 @@ function workWithWindow() {
         getMainNewsScroll.appendChild(registerButton);
         console.log("loginClicked finished");
     }
+    function changeUserName(user) {
+        console.log("changeUserName called");
+        console.log("Prinyato imya=" + user);
+        userName = user;
+        var div1 = document.querySelector(".userName");
+        while (div1.firstElementChild) {
+            div1.removeChild(div1.firstChild);
+        }
+        var obj1 = document.createElement('base');
+        obj1.innerHTML = user.name;
+        div1.appendChild(obj1);
+        console.log("changeUserName finished");
 
-    /*это также работает по кнопкам над главной лентой новостей*/
+    }
     return {
         newsList: getNewsList,
         commonNewsList: getCommonNewsList,
