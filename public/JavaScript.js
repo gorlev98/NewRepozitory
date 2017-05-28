@@ -904,14 +904,14 @@ function workWithWindow() {
 
     function loginClicked() {
         console.log("loginClicked called");
-        alert(" name:Lev,parol:lkoelk");
-        console.log(" name:Lev,parol:lkoelk");
+        alert(" username:Lev,password:lkoelk");
+        console.log(" username:Lev,password:lkoelk");
         function loginButtonClicked() {
             var loginTextPole = document.getElementById('l_b_id');
             var pTextPole = document.getElementById("p_b_id");
             var tempUserName = loginTextPole.value;
             var tempUserParol = pTextPole.value;
-            var user = {'name': tempUserName, 'parol': tempUserParol};
+            var user = {'username': tempUserName, 'password': tempUserParol};
             var text;
             var loginPromise = new Promise(function(resolve,reject) {
                 var oReq = new XMLHttpRequest();
@@ -919,42 +919,9 @@ function workWithWindow() {
                 function cleanUp() {
                     oReq.removeEventListener('load', handler);
                 }
-
-               /* function handler() {
-
-                    text = JSON.parse(this.responseText);
-                    console.log(text);
-                    for (var i = 0; i < text.length; i++) {
-                        if (user.name == text[i].name) {
-                            if (user.parol == text[i].parol) {
-                                changeUserName({name: tempUserName, type: "redactor", try: 0});
-                                alert("good");
-                                workVar.newsList();
-                                cleanUp();
-                                return;
-                            }
-                        }
-                        else {
-                            alert("bad");
-                        }
-                        workVar.newsList();
-                        cleanUp();
-                    }
-                }
-
-                oReq.addEventListener('load', handler);
-                console.log("Event listener added");
-                oReq.open('GET', '/user');
-                console.log("Try to GET user");
-                oReq.send();*/
                 function handler() {
-
-                    //text = JSON.parse(this.responseText);
-                    text =this.responseText.substr(0,100);
-                    console.log("text=");
-                    console.log(text+"|");
-                    var good = "\"good\"";
-                    if(text == good)
+                    console.log("status="+this.status);
+                    if(this.status == 200)
                     {
                         alert("good");
                         console.log("Change name");
@@ -970,12 +937,13 @@ function workWithWindow() {
 
                 }
                 oReq.addEventListener('load', handler);
-                console.log("Event listener added");
-
-                oReq.open('POST','/login');
-                oReq.setRequestHeader('content-type', 'application/json');
                 const body = JSON.stringify(user);
+                alert(body);
+                oReq.open('POST','/login');
+                oReq.setRequestHeader('Content-Type', 'application/json');
                 oReq.send(body);
+
+               // workVar.newsList();
             });
         }
 
@@ -984,11 +952,11 @@ function workWithWindow() {
             getMainNewsScroll.removeChild(getMainNewsScroll.firstChild);
         }
         var commentText = document.createElement('div');
-        commentText.innerHTML = "<text> Vvedite imya i parol dlya vhoda ili registracii</text>";
+        commentText.innerHTML = "<text> Введите ваш никнейм (username) и пароль (password)</text>";
         getMainNewsScroll.appendChild(commentText);
 
         var loginText = document.createElement('div');
-        loginText.innerHTML = "<text> Login </text>";
+        loginText.innerHTML = "<text> Username </text>";
         getMainNewsScroll.appendChild(loginText);
         var loginBox = document.createElement('input');
         loginBox.className = "loginBox";
@@ -996,7 +964,7 @@ function workWithWindow() {
 
         getMainNewsScroll.appendChild(loginBox);
         var parolText = document.createElement('div');
-        parolText.innerHTML = "<text> Parol </text>";
+        parolText.innerHTML = "<text> Password </text>";
 
         getMainNewsScroll.appendChild(parolText);
         var parolBox = document.createElement('input');
