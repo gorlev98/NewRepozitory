@@ -1,3 +1,6 @@
+/intetics/node_modules/**
+/intetics/node_modules/*
+/intetics/node_modules/
 /node_modules/*
 *.iml
 *.ini
