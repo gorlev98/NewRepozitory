@@ -161,13 +161,18 @@ function work_with_window(){
     var is_login=0;
     var new_picture_photo="http://computers-repair.ru/wp-content/uploads/2016/01/positive-affirmations-daily-affirmations-1024x1024.png";
     var no_picture_src = "No picture.png";
-    var picture_mass=[{name:"0",tag:"Disaster",src:"http://cdn.playbuzz.com/cdn/6ff80729-e207-424f-8e9e-1752aa5835bd/8f97cde6-9764-4423-8329-dc7165a90bec.jpg",info:"info0"},
-    {name:"1asdf",tag:"Best Man",src:"http://www.theprintblog.com/wp-content/uploads/2013/03/green.jpg",info:"info1"},
-    {name:"2asdf",tag:"Best Man",src:"https://mc.wabbitface.com/wp-content/uploads/2013/10/blue.jpg",info:"info2"},
-    {name:"3asdf",tag:"Best Sky",src:"http://funny-soap.ru/images/stories/virtuemart/product/1182.jpg",info:"info2"},
-    {name:"4asdf",tag:"Best",src:"http://risovach.ru/upload/2014/12/generator/chyornyy-pryamougolnik_69103191_orig_.jpg",info:"info2"},
-    {name:"5asdf",tag:"Best",src:"http://деко-р-о.рф/files/1405366948842.jpg"}
-    ];
+    var picture_mass=[{name:"0",tag:"Disaster",src:"https://im0-tub-by.yandex.net/i?id=16d36fc1e03a8d9249b9b87a3a324a84&n=13",info:"info0"},
+        {name:"1asdf",tag:"Man",src:"https://im0-tub-by.yandex.net/i?id=a810c2d23c741c76264d009e20d230b2&n=13",info:"info1"},
+        {name:"2asdf",tag:"Best Man",src:"http://i.huffpost.com/gen/1360140/images/o-THUMBS-UP-facebook.jpg",info:"info2"},
+        {name:"2.1asdf",tag:"Man",src:"http://cf.ltkcdn.net/stress/images/std/189582-260x260-Angry-People-Clipart-4.jpg",info:"info2.1"},
+        {name:"2.2asdf",tag:"Best Man",src:"http://i.huffpost.com/gen/1360140/images/o-THUMBS-UP-facebook.jpg",info:"info2.2"},
+        {name:"3asdf",tag:"Best Sky",src:"http://333v.ru/uploads/64/64ca084bdb8b9933b4550a486f476d11.jpg",info:"info2"},
+        {name:"4asdf",tag:"Sky",src:"https://w-dog.net/wallpapers/10/0/450133090777939/ocean-horizon-sky-clouds-the-distance-ships-flowers-beauty.jpg",info:"info2"},
+        {name:"5asdf",tag:"War",src:"http://sf.co.ua/13/07/wallpaper-2893325.jpg"},
+        {name:"6asdf",tag:"Nature",src:"http://imagine.pics/images/262/262326.jpg"},
+        {name:"7asdf",tag:"Feelings",src:"https://im0-tub-by.yandex.net/i?id=beb172ab27b6e2bc59b32f6e17dafc32&n=13"},
+        {name:"7asdf",tag:"Feelings",src:"http://s-media-cache-ak0.pinimg.com/236x/bf/f6/c6/bff6c6aa9f44dc9983a16856150c7343.jpg"}
+        ];
 
     var login_mass =[{username:"userA",password:"IdontK9ou",email:"user1@mail.de"},
         {username:"userB",password:"MeT000",email:"hello@mail.by"},
@@ -423,6 +428,7 @@ function work_with_window(){
                 if(pict_name.length>0) {
                     if(load_picture==1) {
                         picture_mass.push({name: pict_name, tag: tag_line, src: src, info: addition});
+                        func_variable.get_picture_list();
                     }
                 }
                 else{
