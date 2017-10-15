@@ -1,0 +1,285 @@
+    .base{}
+    .allWindow{
+        width:1550px;
+        height:760px;
+    }
+    space{
+        /*just for space between words*/
+        visibility: hidden;
+    }
+    body{
+        background: #000001 url("Blue-Sky2.jpg") left top;
+    }
+    .header{
+        /* Positioning */
+        position: absolute;
+        left:0px;top:8px;
+        z-index:10;
+        /* Display & Box Model */
+        width: 1550px;
+        height: 50px;
+        line-height: 15px;
+        padding: 15px;
+        font-size:4em;
+        /*Color*/
+        color: whitesmoke;
+        /*Else*/
+        text-align: center;
+    }
+    .header-text{
+        /* Positioning */
+        position: absolute;
+        left:85px;top:18px;
+        z-index:0;
+        /* Display & Box Model */
+        width: 200px;
+        height:20px;
+        line-height: 5px;
+        padding: 15px;
+        font-size:1.5em;
+        /*Color*/
+        color: whitesmoke;
+        /*Else*/
+        text-align: left;
+    }
+    i:link {
+        text-decoration: none;
+    }
+    i:hover  {
+        text-decoration: underline;
+    }
+    .loginHyperlink{
+        /*Positioning*/
+        position:absolute;
+        top:10px;
+        left:1500px;
+        z-index: 5;
+        /*Display & Box Model*/
+        width: 40px;
+        height: 40px;
+        font-size:25px;
+        /*Color*/
+        color: yellow;
+        /*Else*/
+        text-align: right;
+        background: #000002 url("Door.jpg") no-repeat left top;
+    }
+    .registrationHyperLink{
+        /*Positioning*/
+        position:absolute;
+        top:60px;
+        left:1500px;
+        z-index: 5;
+        /*Display & Box Model*/
+        width: 40px;
+        height: 40px;
+        font-size:25px;
+        /*Color*/
+        color: yellow;
+        /*Else*/
+        text-align: right;
+        background: #000002 url("Login.png") no-repeat left top;
+    }
+    .logo-box {
+         /* Positioning */
+         position: absolute;
+         top: 2px;
+         left: 10px;
+         z-index: 0;
+         /* Display & Box Model */
+         display: inline-block;
+         width: 70px;
+         height: 70px;
+         border: 3px solid black;
+         /* Color */
+         background: #000002 url("P.jpg") no-repeat left top;
+     }
+    .userName{
+        /* Positioning */
+        position: absolute;
+        top: 10px;
+        left: 1200px;
+        z-index: 5;
+        /* Display & Box Model*/
+        width: 200px;
+        height: 20px;
+        font-size:25px;
+        /*Color*/
+        color:navajowhite;
+        /*Else*/
+        text-align: right;
+    }
+    tag{
+        color: darkblue;
+    }
+    tag:link{
+        text-decoration: none;
+    }
+    tag:hover{
+        text-decoration: underline;
+    }
+    .tag_examples{
+        /* Positioning */
+        position: absolute;
+        top: 160px;
+        left: 10px;
+        z-index: 5;
+        /* Display & Box Model*/
+        width: 200px;
+        height: 20px;
+        font-size:25px;
+        /*Color*/
+        color:black;
+        /*Else*/
+        text-align: left;
+    }
+    .tag_search_place{
+        /* Positioning */
+        position: absolute;
+        top: 100px;
+        left: 10px;
+        z-index: 5;
+        /* Display & Box Model*/
+        width: 1000px;
+        height: 50px;
+        font-size:25px;
+        /*Color*/
+        color:black;
+        /*Else*/
+        text-align: left;
+    }
+    .tag_search_textarea{
+        width:900px;
+        height:20px;
+    }
+    .picture_list{
+        /* Positioning */
+        position: absolute;
+        top: 200px;
+        left: 10px;
+        right:10px;
+        bottom: 20px;
+        z-index: 5;
+        /* Display & Box Model*/
+        font-size:25px;
+        border: dotted;
+        border-width: medium;
+        /*Color*/
+        color:black;
+        border-color: green;
+        /*Else*/
+        text-align: left;
+        overflow:auto;
+    }
+    .createNewPictureButton{
+        /*Display & Box Model*/
+        display: inline-block;
+        width: 500px;
+        height: 500px;
+        color: transparent;
+    }
+    .createNewPictureButtonBackground{
+        /*Display & Box Model*/
+        display: inline-block;
+        width: 500px;
+        height: 500px;
+        color: transparent;
+    }
+    .lookPictureButton{
+        /*Display & Box Model*/
+        display: inline-block;
+        width: 500px;
+        height: 500px;
+        color: transparent;
+    }
+    .lookPictureButtonBackground{
+        /*Display & Box Model*/
+        display: inline-block;
+        width: 500px;
+        height: 500px;
+        color: transparent;
+    }
+    .searchButton{
+        /*Display & Box Model*/
+        position: absolute;
+        display: inline-block;
+        left:920px;
+        width: 100px;
+        height:26px;
+    }
+    .button{
+        /*Display & Box Model*/
+        display: inline-block;
+        width: 500px;
+        height: 500px;
+    }
+    .addNewPictureWindow{
+        /* Positioning */
+        position: absolute;
+        top: 100px;
+        left: 100px;
+        right:100px;
+        bottom: 100px;
+        z-index: 5;
+        /* Display & Box Model*/
+        font-size:25px;
+        border: dotted;
+        border-width: medium;
+        /*Color*/
+        color:black;
+        border-color: green;
+        /*Else*/
+        text-align: left;
+    }
+    .logo-registerBox{
+        /* Positioning */
+        position: absolute;
+        top: 200px;
+        left: 350px;
+        right:350px;
+        bottom: 200px;
+        z-index: 10;
+        /* Display & Box Model*/
+        font-size:25px;
+        border: dotted;
+        border-width: medium;
+        /*Color*/
+        color:black;
+        border-color:yellow;
+        background-color: aliceblue;
+        /*Else*/
+        text-align: center;
+    }
+    .logText{
+        text-align: center;
+    }
+    .logString{
+    }
+    .setPictureName{
+        width:400px;
+    }
+    .setPictureInfo{
+        width:400px;
+        height:160px;
+    }
+    .pictureParam{
+        /* Positioning */
+        position: absolute;
+        left:550px;
+        width:450px;
+        height:550px;
+    }
+    .pictureAllTags{
+        /* Positioning */
+        position: absolute;
+        left:1050px;
+        width:500px;
+        height:550px;
+    }
+
+    .picturePreView{
+        /* Positioning */
+        position: absolute;
+        width:500px;
+        height:550px;
+    }

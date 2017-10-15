@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Site </title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <meta charset="UTF-8">
+    <script src="javaScript.js"></script>
+</head>
+<body>
+<div class="allWindow">
+    <div class="header">
+        <div class="header-text">PhotoViewer</div>
+        <div class="logo-box"></div>
+        <div class="userName" id="userNameBox">Hello</div>
+        <div class="loginHyperlink" onclick="func_variable.login_clicked()"></div>
+        <div class="registrationHyperLink" onclick="func_variable.registration_clicked()"></div>
+    </div>
+    <div class="tag_search_place">Enter your tag
+        <textarea type='text' class='tag_search_textarea' id='tag_input'></textarea>
+        <button class='searchButton' id='search_button' onclick="func_variable.search_clicked()">Search</button></div>
+    </div>
+    <div class="tag_examples" id="tag_line">
+    </div>
+    <div class="picture_list"></div>
+</div>
+</body>
+<script>
+    var func_variable = work_with_window();
+    func_variable.tag_line();
+    func_variable.get_picture_list();
+</script>
+</html>
