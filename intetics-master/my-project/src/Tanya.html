@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tasks</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+        integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Abril+Fatface" rel="stylesheet">
+  <script type="text/javascript" src="jquery.js"></script>
+  <style>
+    hr {
+    }
+
+    .card-box {
+      border: 1px gray dotted;
+      height: 90%;
+
+      display:block;
+    }
+
+    .card-box-over {
+      width: 24%;
+      height: 500px;
+      display:block;
+    }
+
+    .lesson{
+      margin: 15px;
+    }
+
+    .flex {
+      display: flex;
+      margin: 10px auto;
+      width: 90%;
+      justify-content: space-around;
+    }
+
+    .checked {
+      color: orange;
+    }
+
+    .xz{
+      font-size: 20px;
+    }
+
+
+    body {
+      font-family: 'Abril Fatface', cursive;
+    }
+
+    .overlay {
+      height: 50%;
+      width: 40%;
+      top:  20%;
+      left: 30%;
+      display: none;
+      position: fixed;
+      z-index: 1;
+      background-color: rgb(0, 0, 0);
+    }
+
+    .overlay-content {
+      position: relative;
+      top: 10%;
+      width: 100%;
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .overlay a {
+      padding: 8px;
+      text-decoration: none;
+      font-size: 36px;
+      color: #393781;
+      display: block;
+      transition: 0.3s;
+    }
+
+    .overlay a:hover, .overlay a:focus {
+      color: #f1f1f1;
+    }
+
+    .overlay .closebtn {
+      position: absolute;
+      right: 30px;
+      font-size: 60px;
+    }
+
+    @media screen and (max-height: 450px) {
+      .overlay a {font-size: 20px}
+      .overlay .closebtn {
+        font-size: 40px;
+        top: 15px;
+        right: 35px;
+      }
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+
+    body {
+      align-items: center;
+      align-self: center;
+      background-attachment: scroll;
+      background-size: cover;
+    }
+  </style>
+</head>
+<body>
+<div class="flex">
+  <div class="card-box-over">
+    <div class="card-box">
+      <b class="xz">Tomorrow</b>
+      <hr>
+      <div class="lesson">
+        <input class="check" type="checkbox">
+        <a href="#" onclick="openNav()">Programming</a>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star"></span>
+        <span class="fa fa-star"></span>
+      </div>
+      <div class="lesson">
+        <input class="check" type="checkbox">
+        <a href="#" onclick="openNav()">Programming</a>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star"></span>
+        <span class="fa fa-star"></span>
+      </div>
+    </div>
+    <button class="btn btn-success">Update</button>
+  </div>
+  <div class="card-box-over">
+    <div class="card-box">
+      <b class="xz">This week</b>
+      <hr>
+      <div class="lesson">
+        <input type="checkbox">
+        <a href="#" onclick="openNav()">Programming</a>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star"></span>
+        <span class="fa fa-star"></span>
+      </div>
+    </div>
+    <button class="btn btn-success">Update</button>
+  </div>
+  <div class="card-box-over">
+    <div class="card-box">
+      <b class="xz">Soon</b>
+      <hr>
+      <div class="lesson">
+        <input type="checkbox">
+        <a href="#" onclick="openNav1()">Course work</a>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star"></span>
+        <span class="fa fa-star"></span>
+      </div>
+    </div>
+    <button class="btn btn-success">Update</button>
+  </div>
+</div>
+</body>
+</html>
