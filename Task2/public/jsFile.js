@@ -3,70 +3,73 @@
  */
 "use strict";
 function lock(){
-    var rulesArray=[1,3,0,2,4];
-    var names=["Stone","Scissors","Paper","Lizard","Spock"];
-    var resultMass=["Gamer Win","Draw","Robot Win"];
-    var robotAnswerSave;var randomStringSave;
-    var choose=0;
+    var names=[];
+    var choose="Stone";
     function robotAnswer(){
-        function roboChoose(min, max) {
-            return Math.floor(Math.random() * (max - min)) + min;
-        }
-        function randomString(robotAnswer){
-            var text = robotAnswer.toString();
-            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-            for (var i = 0; i < 10; i++)
-                text += possible.charAt(Math.floor(Math.random() * possible.length));
-            randomString=text;
-            console.log("RS="+randomString);
-            return text;
-        }
-        var max=rulesArray.length;
-        robotAnswerSave=roboChoose(0,max);
-        console.log("robotAnswerSave="+robotAnswerSave);
-        var toHash=randomString(robotAnswerSave);
-        randomStringSave=toHash;
-        var hash=SHA1(toHash);
-        console.log("H="+hash);
-        document.getElementById('robo_answer').innerText=hash;
+        var answer_promise=new Promise(function(resolve,reject){
+            var oReq = new XMLHttpRequest();
+            console.log("oReq created");
+            function cleanUp() {
+                oReq.removeEventListener('load', handler);
+            }
+            function handler() {
+                var text = JSON.parse(this.responseText);
+                console.log(text);
+                document.getElementById('robo_answer').innerText=text;
+            }
+            oReq.addEventListener('load', handler);
+            console.log("Event listener added");
+            oReq.open('GET', '/hash');
+            console.log("Try to GET /hash");
+            oReq.send();
+            console.log("hash get finished");
+        })
     }
-
-    function battle(roboAnswer,gamerAnswer)//2 id in rulesArray;
-     {
-        console.log("R="+roboAnswer+",G="+gamerAnswer);
-        var go=0;//nobody win
-        var step=rulesArray.length/2;
-        if(roboAnswer>gamerAnswer){
-            if(roboAnswer-gamerAnswer<step){
-                go=-1;//robot win
+    function buttonNames(){
+        var button_promise=new Promise(function(resolve,reject){
+            var oReq = new XMLHttpRequest();
+            console.log("oReq created");
+            function cleanUp() {
+                oReq.removeEventListener('load', handler);
             }
-            else{
-                go=1;//gamer win
+            function handler() {
+                var text = JSON.parse(this.responseText);
+                names=text;
+                constructBattlePole();
             }
-        }
-        if(roboAnswer<gamerAnswer){
-            if(gamerAnswer-roboAnswer<step){
-                go=1;//gamer win
-            }
-            else
-            {
-                go=-1;//robot win
-            }
-        }
-        return go;
+            oReq.addEventListener('load', handler);
+            console.log("Event listener added");
+            oReq.open('GET', '/buttons');
+            console.log("Try to GET /hash");
+            oReq.send();
+            console.log("hash get finished");
+        })
     }
     function battleButtonPressed() {
-        //robotAnswerSave & choose - numbers of choosen words; roboId & gamerId - id of that numbers in rules
-        var roboId = rulesArray.indexOf(robotAnswerSave);
-        var gamerId = rulesArray.indexOf(choose);
-        console.log('RAS='+robotAnswerSave+",Choose="+choose);
-        console.log('rId='+roboId+",gId="+gamerId);
-        var result = battle(roboId, gamerId);
-        document.getElementById('hash_string').innerText=randomStringSave;
-        document.getElementById('robotCT').innerText=names[robotAnswerSave]+"->"+robotAnswerSave;
-        document.getElementById('gamerCT').innerText=names[choose]+"->"+choose;//return text & number of that word
-        document.getElementById('result').innerText=resultMass[result+1];
-        func_variable.robotAnswer();
+            var calculation_promise=new Promise(function(resolve,reject){
+            var oReq = new XMLHttpRequest();
+            console.log("oReq created");
+            function cleanUp() {
+                oReq.removeEventListener('load', handler);
+            }
+            function handler(){
+                var text = JSON.parse(this.responseText);
+                document.getElementById('hash_string').innerText=text.phString;
+                document.getElementById('robotCT').innerText=text.compWord;
+                document.getElementById('gamerCT').innerText=choose;//return text
+                document.getElementById('result').innerText=text.winner;
+                func_variable.robotAnswer();
+            }
+            oReq.addEventListener('load', handler);
+            console.log("Event listener added");
+            var body="choose="+choose;
+            oReq.open('GET', '/battle?'+body);
+            oReq.setRequestHeader('Content-Type', 'application/json');
+            console.log("Try to GET /battle");
+            oReq.send();
+
+            console.log("battle finished");
+        })
     }
     function constructBattlePole(){
         var div1=document.getElementById('poleConstruct');
@@ -81,142 +84,10 @@ function lock(){
         document.getElementById(0).checked=true;
     }
     function changeAnswer(i){
-        choose=i;
-        alert(i);
+        choose=names[i];
     }
-    constructBattlePole();
+    buttonNames();
     return {battle: battleButtonPressed,robotAnswer:robotAnswer,change:changeAnswer};
 }
 
-function SHA1(msg) {
-    function rotate_left(n, s) {
-        var t4 = ( n << s ) | (n >>> (32 - s));
-        return t4;
-    };
-    function lsb_hex(val) {
-        var str = "";
-        var i;
-        var vh;
-        var vl;
-        for (i = 0; i <= 6; i += 2) {
-            vh = (val >>> (i * 4 + 4)) & 0x0f;
-            vl = (val >>> (i * 4)) & 0x0f;
-            str += vh.toString(16) + vl.toString(16);
-        }
-        return str;
-    };
-    function cvt_hex(val) {
-        var str = "";
-        var i;
-        var v;
-        for (i = 7; i >= 0; i--) {
-            v = (val >>> (i * 4)) & 0x0f;
-            str += v.toString(16);
-        }
-        return str;
-    };
-    function Utf8Encode(string) {
-        string = string.replace(/\r\n/g, "\n");
-        var utftext = "";
-        for (var n = 0; n < string.length; n++) {
-            var c = string.charCodeAt(n);
-            if (c < 128) {
-                utftext += String.fromCharCode(c);
-            }
-            else if ((c > 127) && (c < 2048)) {
-                utftext += String.fromCharCode((c >> 6) | 192);
-                utftext += String.fromCharCode((c & 63) | 128);
-            }
-            else {
-                utftext += String.fromCharCode((c >> 12) | 224);
-                utftext += String.fromCharCode(((c >> 6) & 63) | 128);
-                utftext += String.fromCharCode((c & 63) | 128);
-            }
-        }
-        return utftext;
-    };
-    var blockstart;
-    var i, j;
-    var W = new Array(80);
-    var H0 = 0x67452301;
-    var H1 = 0xEFCDAB89;
-    var H2 = 0x98BADCFE;
-    var H3 = 0x10325476;
-    var H4 = 0xC3D2E1F0;
-    var A, B, C, D, E;
-    var temp;
-    msg = Utf8Encode(msg);
-    var msg_len = msg.length;
-    var word_array = new Array();
-    for (i = 0; i < msg_len - 3; i += 4) {
-        j = msg.charCodeAt(i) << 24 | msg.charCodeAt(i + 1) << 16 |
-            msg.charCodeAt(i + 2) << 8 | msg.charCodeAt(i + 3);
-        word_array.push(j);
-    }
-    switch (msg_len % 4) {
-        case 0:
-            i = 0x080000000;
-            break;
-        case 1:
-            i = msg.charCodeAt(msg_len - 1) << 24 | 0x0800000;
-            break;
-        case 2:
-            i = msg.charCodeAt(msg_len - 2) << 24 | msg.charCodeAt(msg_len - 1) << 16 | 0x08000;
-            break;
-        case 3:
-            i = msg.charCodeAt(msg_len - 3) << 24 | msg.charCodeAt(msg_len - 2) << 16 | msg.charCodeAt(msg_len - 1) << 8 | 0x80;
-            break;
-    }
-    word_array.push(i);
-    while ((word_array.length % 16) != 14) word_array.push(0);
-    word_array.push(msg_len >>> 29);
-    word_array.push((msg_len << 3) & 0x0ffffffff);
-    for (blockstart = 0; blockstart < word_array.length; blockstart += 16) {
-        for (i = 0; i < 16; i++) W[i] = word_array[blockstart + i];
-        for (i = 16; i <= 79; i++) W[i] = rotate_left(W[i - 3] ^ W[i - 8] ^ W[i - 14] ^ W[i - 16], 1);
-        A = H0;
-        B = H1;
-        C = H2;
-        D = H3;
-        E = H4;
-        for (i = 0; i <= 19; i++) {
-            temp = (rotate_left(A, 5) + ((B & C) | (~B & D)) + E + W[i] + 0x5A827999) & 0x0ffffffff;
-            E = D;
-            D = C;
-            C = rotate_left(B, 30);
-            B = A;
-            A = temp;
-        }
-        for (i = 20; i <= 39; i++) {
-            temp = (rotate_left(A, 5) + (B ^ C ^ D) + E + W[i] + 0x6ED9EBA1) & 0x0ffffffff;
-            E = D;
-            D = C;
-            C = rotate_left(B, 30);
-            B = A;
-            A = temp;
-        }
-        for (i = 40; i <= 59; i++) {
-            temp = (rotate_left(A, 5) + ((B & C) | (B & D) | (C & D)) + E + W[i] + 0x8F1BBCDC) & 0x0ffffffff;
-            E = D;
-            D = C;
-            C = rotate_left(B, 30);
-            B = A;
-            A = temp;
-        }
-        for (i = 60; i <= 79; i++) {
-            temp = (rotate_left(A, 5) + (B ^ C ^ D) + E + W[i] + 0xCA62C1D6) & 0x0ffffffff;
-            E = D;
-            D = C;
-            C = rotate_left(B, 30);
-            B = A;
-            A = temp;
-        }
-        H0 = (H0 + A) & 0x0ffffffff;
-        H1 = (H1 + B) & 0x0ffffffff;
-        H2 = (H2 + C) & 0x0ffffffff;
-        H3 = (H3 + D) & 0x0ffffffff;
-        H4 = (H4 + E) & 0x0ffffffff;
-    }
-    var temp = cvt_hex(H0) + cvt_hex(H1) + cvt_hex(H2) + cvt_hex(H3) + cvt_hex(H4);
-    return temp.toLowerCase();
-}
+
